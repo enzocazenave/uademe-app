@@ -9,18 +9,16 @@ import {
     Text
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 const { height: screenHeight } = Dimensions.get('screen');
 
 const imagesArray = [
-    { url: 'https://cdn.discordapp.com/attachments/1008885821027405958/1055277706272591902/Captura_de_pantalla_2022-12-20_a_las_21.38.57-min.png', id: 0 },
-    { url: 'https://cdn.discordapp.com/attachments/1008885821027405958/1091610974768865401/Captura_de_pantalla_2023-04-01_a_las_03.32.06.png', id: 1 }, 
-    { url: 'https://cdn.discordapp.com/attachments/1008885821027405958/1059480358606864384/Captura_de_pantalla_2023-01-02_a_las_11.35.59.png', id: 2 }
+    { url: 'https://cdn.discordapp.com/attachments/1008885821027405958/1091610974768865401/Captura_de_pantalla_2023-04-01_a_las_03.32.06.png', id: 0 },
+    { url: 'https://cdn.discordapp.com/attachments/1008885821027405958/1091820734654992404/Captura_de_pantalla_2023-04-01_a_las_17.25.37.png', id: 1 }, 
+    { url: 'https://cdn.discordapp.com/attachments/1008885821027405958/1091820903878381578/Captura_de_pantalla_2023-04-01_a_las_17.26.09.png', id: 2 }
 ]
 
 export const CoupleScreen = () => {
-    const { top } = useSafeAreaInsets();
     const [images, setImages] = useState(imagesArray);
     const [currentImage, setCurrentImage] = useState(0);
 
@@ -31,11 +29,12 @@ export const CoupleScreen = () => {
                 onPress={ () => setCurrentImage((prev) => {
                     if (prev + 1 == images.length) return 0;
                     return prev + 1;
-                }) }
+                })}
                 style={ styles.card }
             >
                 <ImageBackground
                     source={{ uri: images[currentImage].url }}
+                    fadeDuration={ 500 }
                     style={ styles.cardProfileMainImage }
                     imageStyle={{ borderRadius: 8 }}
                 >
@@ -105,8 +104,8 @@ const styles = StyleSheet.create({
     },
     cardControls: {
         flex: 1,
-        gap: 20,
-        padding: 20,
+        gap: 15,
+        padding: 15,
         flexDirection: 'column',
         justifyContent: 'flex-end',
         borderBottomLeftRadius: 8,
@@ -177,6 +176,6 @@ const styles = StyleSheet.create({
         borderRadius: 50
     },
     imageSelected: {
-        backgroundColor: '#B9B8B7'
+        backgroundColor: '#f0f0f0'
     }
 })

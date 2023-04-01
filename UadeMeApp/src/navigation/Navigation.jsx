@@ -16,8 +16,7 @@ export const Navigation = () => {
                 <Tab.Navigator
                     screenOptions={{
                         header:  ({ navigation, route, options }) => {
-                            const title = getHeaderTitle(options, route.name);
-                            return <Header title={ title } />
+                            return <Header screen={ route.name } />
                         }
                     }}
                     tabBar={ (props) => <TabBar { ...props } /> }
