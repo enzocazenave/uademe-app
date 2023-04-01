@@ -9,8 +9,6 @@ import { Header } from './Header';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-
-
 export const Navigation = () => {
     return (<>
         {(true)

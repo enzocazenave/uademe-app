@@ -26,8 +26,8 @@ export const CoupleScreen = () => {
 
     return (
         <View style={ styles.container }>
-            <TouchableOpacity 
-                activeOpacity={ 0.9 }
+            <TouchableOpacity
+                activeOpacity={ 1 }
                 onPress={ () => setCurrentImage((prev) => {
                     if (prev + 1 == images.length) return 0;
                     return prev + 1;
