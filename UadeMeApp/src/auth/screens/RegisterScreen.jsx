@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
     View,
-    Dimensions,
     StyleSheet,
     Text,
     TextInput,
@@ -10,9 +9,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
-
-
-const { height: screenHeight } = Dimensions.get('screen');
 
 export const RegisterScreen = ({ navigation }) => {
 
@@ -40,7 +36,7 @@ export const RegisterScreen = ({ navigation }) => {
                 <View style={ styles.textContainer }>
                     <Text style={[ styles.text, styles.textBold ]}>Diseñado exclusivamente para alumnos de UADE.</Text>
                     <Text style={ styles.text }>
-                        ¿Querés buscar pareja, conseguir apuntes de materias, hacer amigos, organizarte y saber más sobre nuestra universidad?
+                        ¿Querés hacer amigos, conseguir apuntes de materias, buscar pareja, organizarte y saber más sobre nuestra universidad?
                         
                         Estás en la aplicación indicada.
                     </Text>
@@ -53,7 +49,6 @@ export const RegisterScreen = ({ navigation }) => {
                 <TextInput
                     style={[ styles.input, focus.name && { borderColor: '#0a85cc', borderWidth: 0.5 } ]}
                     placeholder="Nombre"
-                    secureTextEntry
                     onFocus={ () => changeFocus('name', true) }
                     onBlur={ () => changeFocus('name', false) }
                 />
@@ -61,7 +56,6 @@ export const RegisterScreen = ({ navigation }) => {
                 <TextInput
                     style={[ styles.input, focus.surname && { borderColor: '#0a85cc', borderWidth: 0.5 } ]}
                     placeholder="Apellido"
-                    secureTextEntry
                     onFocus={ () => changeFocus('surname', true) }
                     onBlur={ () => changeFocus('surname', false) }
                 />
@@ -69,7 +63,7 @@ export const RegisterScreen = ({ navigation }) => {
                 <View style={ [styles.emailInputContainer, focus.email && { borderColor: '#0a85cc', borderWidth: 0.5 } ]}>
                     <TextInput
                         style={ styles.emailInput }
-                        placeholder="Usuario"
+                        placeholder="Usuario "
                         onFocus={ () => changeFocus('email', true) }
                         onBlur={ () => changeFocus('email', false) }
                     />
@@ -89,6 +83,7 @@ export const RegisterScreen = ({ navigation }) => {
                 <TouchableOpacity
                     activeOpacity={ 0.7 }
                     style={ styles.submitButton }
+                    onPress={ () => navigation.navigate('VerifyScreen') }
                 > 
                     <Text style={ styles.submitButtonText } >Crear cuenta</Text>
                 </TouchableOpacity>
@@ -159,11 +154,9 @@ const styles = StyleSheet.create({
         borderWidth: 0.5
     },
     emailInput: {
-        flex: 1,
-        fontSize: 18
+        fontSize: 18,
     },
     emailDomain: {
-        flex: 2,
         fontSize: 18,
         color: '#555'
     },

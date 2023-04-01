@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
     View,
-    Dimensions,
     StyleSheet,
     Text,
     TextInput,
@@ -11,10 +10,43 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 
-export const LoginScreen = ({ navigation }) => {
+const CountDown = () => {
+    const [countdown, setCountdown] = useState(59);
+    const timerId = useRef();
+
+    useEffect(() => {
+        timerId.current = setInterval(() => {
+            setCountdown((prev) => prev - 1)
+        }, 1000);
+
+        return () => clearInterval(timerId.current);
+    }, []);
+
+    useEffect(() => {
+        if (countdown <= 0) {
+            clearInterval(timerId.current);
+        }
+    }, [countdown]);
+
+    return (
+        <TouchableOpacity
+            style={ styles.sendAgain }
+            activeOpacity={ 0.7 }
+            disabled={ countdown > 0 }
+        >
+            <Text
+                style={ [styles.sendAgainText, countdown > 0 && styles.sendAgainTextDisabled] }
+            >
+                Reenviar el código { (countdown > 0) && ( <Text>en { countdown } segundos.</Text>) }
+            </Text>
+        </TouchableOpacity>
+    )
+}
+
+export const VerifyScreen = ({ navigation }) => {
 
     const { top } = useSafeAreaInsets();
-    const [focus, setFocus] = useState({ email: false, password: false });
+    const [focus, setFocus] = useState({ code: false });
 
     const changeFocus = (input, bool) => {
         setFocus((prevState) => ({
@@ -23,8 +55,9 @@ export const LoginScreen = ({ navigation }) => {
         }));
     }
 
-    const Register = () => {
-        navigation.navigate('RegisterScreen');
+    const verifyCode = () => {
+        navigation.pop();
+        navigation.navigate('WelcomeScreen');
     }
 
     return (
@@ -37,48 +70,33 @@ export const LoginScreen = ({ navigation }) => {
                 <View style={ styles.textContainer }>
                     <Text style={[ styles.text, styles.textBold ]}>Diseñado exclusivamente para alumnos de UADE.</Text>
                     <Text style={ styles.text }>
-                        ¿Querés hacer amigos, conseguir apuntes de materias, buscar pareja, organizarte y saber más sobre nuestra universidad?
-                        Estás en la aplicación indicada.
+                        Hemos enviado un código de verificación de 6 dígitos a 
+                        <Text style={{ fontWeight: 600 }}> ecazenave@uade.edu.ar</Text>
+                        . Ve a buscarlo en tu bandeja de entrada o correo no deseado e ingrésalo para que verifiquémos que no eres un robot.
                     </Text>
                 </View>
             </View>
 
             <View style={ styles.form }>
-                <Text style={ styles.formTitle }>Iniciá sesión</Text>
-
-                <View style={ [styles.emailInputContainer, focus.email && { borderColor: '#0a85cc', borderWidth: 0.5 } ]}>
-                    <TextInput
-                        style={ styles.emailInput }
-                        placeholder="Usuario "
-                        onFocus={ () => changeFocus('email', true) }
-                        onBlur={ () => changeFocus('email', false) }
-                    />
-                    <Text style={ styles.emailDomain }>
-                        @uade.edu.ar
-                    </Text>    
-                </View>
+                <Text style={ styles.formTitle }>Código OTP</Text>
 
                 <TextInput
-                    style={[ styles.passwordInput, focus.password && { borderColor: '#0a85cc', borderWidth: 0.5 } ]}
-                    placeholder="Contraseña"
-                    secureTextEntry
-                    onFocus={ () => changeFocus('password', true) }
-                    onBlur={ () => changeFocus('password', false) }
+                    style={[ styles.input, focus.code && { borderColor: '#0a85cc', borderWidth: 0.5 } ]}
+                    placeholder="Código"
+                    keyboardType="number-pad"
+                    onFocus={ () => changeFocus('code', true) }
+                    onBlur={ () => changeFocus('code', false) }
                 />
 
                 <TouchableOpacity
                     activeOpacity={ 0.7 }
                     style={ styles.submitButton }
+                    onPress={ verifyCode }
                 > 
-                    <Text style={ styles.submitButtonText } >Iniciar sesión</Text>
+                    <Text style={ styles.submitButtonText } >Verificar código</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity 
-                    activeOpacity={ 0.7 }
-                    onPress={ Register }
-                >
-                    <Text style={ styles.register }>¿No tienes cuenta? Regístrate</Text>
-                </TouchableOpacity>
+                <CountDown />
             </View>
 
             <View 
@@ -101,7 +119,7 @@ const styles = StyleSheet.create({
     container: {
         padding: 20,
         flex: 1,
-        gap: 80,
+        gap: 30,
         backgroundColor: '#f0f0f0'
     },
     header: {
@@ -113,7 +131,7 @@ const styles = StyleSheet.create({
         fontWeight: 600
     },
     textContainer: {
-        gap: 10
+        gap: 20
     },
     text: {
         textAlign: 'center',
@@ -139,13 +157,15 @@ const styles = StyleSheet.create({
         borderWidth: 0.5
     },
     emailInput: {
+        flex: 1,
         fontSize: 18
     },
     emailDomain: {
+        flex: 2,
         fontSize: 18,
         color: '#555'
     },
-    passwordInput: {
+    input: {
         fontSize: 18,
         borderRadius: 5, 
         backgroundColor: '#e7e7e7',
@@ -164,13 +184,20 @@ const styles = StyleSheet.create({
         fontWeight: 500,
         textAlign: 'center'
     },
-    register: {
+    sendAgain: {
+        padding: 15
+    },
+    sendAgainText: {
+        color: '#04517d',
         textAlign: 'center',
-        color: '#04517d'
+        fontSize: 16
+    },  
+    sendAgainTextDisabled: {
+        color: '#88AABC'
     },
     imageContainer: {
         marginHorizontal: -20,
-        marginTop: -60
+        marginTop: -30
     },
     gradient: {
         position: 'absolute',
