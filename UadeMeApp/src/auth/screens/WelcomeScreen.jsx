@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
     View,
     StyleSheet,
@@ -8,8 +7,8 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
-
 import Icon from 'react-native-vector-icons/Ionicons';
+import * as Animatable from 'react-native-animatable';
 
 export const WelcomeScreen = ({ navigation }) => {
 
@@ -29,11 +28,18 @@ export const WelcomeScreen = ({ navigation }) => {
                 <Text style={ styles.centerContainerTitle }>
                     Tu cuenta ha sido verificada
                 </Text>
-                <Icon
-                    name="checkmark-circle-outline"
-                    size={ 75 }
-                    style={ styles.icon }
-                />
+                
+                <Animatable.View
+                    animation="fadeInUp"
+                    delay={ 300 }
+                    duration={ 500 }
+                >
+                    <Icon
+                        name="checkmark-circle-outline"
+                        size={ 75 }
+                        style={ styles.icon }
+                    />
+                </Animatable.View>
 
                 <View style={{ gap: 10 }}>
                     <Text style={ styles.text }>
@@ -89,7 +95,8 @@ const styles = StyleSheet.create({
     },
     text: {
         textAlign: 'center',
-        fontSize: 16
+        fontSize: 16,
+        zIndex: 10
     },
     textBold: {
         fontWeight: 600
