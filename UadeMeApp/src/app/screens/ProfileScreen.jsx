@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     profile: {
-        paddingHorizontal: 25,
+        paddingHorizontal: 15,
         gap: 5
     },  
     profileName: {
@@ -94,14 +94,14 @@ const styles = StyleSheet.create({
     aboutInput: {
         backgroundColor: '#fff',
         height: 70,
-        marginHorizontal: -25,
-        paddingHorizontal: 25
+        marginHorizontal: -15,
+        paddingHorizontal: 15
     },
     boxes: {
         flexDirection: "column",
         gap: 25,
         height: screenHeight * 0.61,
-        padding: 25
+        padding: 15
     },  
     row: {
         flexDirection: 'row',

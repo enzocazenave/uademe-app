@@ -1,7 +1,27 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { launchImageLibrary } from 'react-native-image-picker';
+import { useState } from 'react';
+
+const imagePickerConfig = {
+    storageOptions: {
+        skipBackup: true,
+        path: 'images'
+    },
+};
 
 export const ProfileImage = ({ image }) => {
+
+    const [uplodadImage, setUploadedImage] = useState();
+
+    const uploadImage = () => {
+        launchImageLibrary(imagePickerConfig, (response) => {
+            setUploadedImage({ uri: response?.uri });
+            console.log(response)
+        })
+        
+    }
+
     return (
         <View style={ [styles.item, image && {borderColor: '#fff0'}] }>
             {image
@@ -20,6 +40,7 @@ export const ProfileImage = ({ image }) => {
                 : (
                     <TouchableOpacity
                         style={ styles.add }
+                        onPress={ uploadImage }
                         activeOpacity={ 0.8 }
                     >
                         <Icon
@@ -30,7 +51,7 @@ export const ProfileImage = ({ image }) => {
                     </TouchableOpacity>
                 )
             }
-            { image && (
+            {image && (
                 <Image
                     source={ { uri: image } }
                     style={ styles.image }

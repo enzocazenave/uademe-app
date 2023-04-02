@@ -85,7 +85,7 @@ const stylesProfile = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingBottom: 10,
-        paddingHorizontal: 25,
+        paddingHorizontal: 15,
         flexDirection: 'row',
     },
     titleContainer: {
