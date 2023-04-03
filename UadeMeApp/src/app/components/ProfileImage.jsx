@@ -12,19 +12,20 @@ const imagePickerConfig = {
 
 export const ProfileImage = ({ image }) => {
 
-    const [uplodadImage, setUploadedImage] = useState();
+    const [uploadedImage, setUploadedImage] = useState();
 
     const uploadImage = () => {
         launchImageLibrary(imagePickerConfig, (response) => {
-            setUploadedImage({ uri: response?.uri });
-            console.log(response)
+            if (response.didCancel) return;
+            setUploadedImage(response?.assets[0].uri);
         })
-        
     }
 
+    const imageCondition = image || uploadedImage;
+
     return (
-        <View style={ [styles.item, image && {borderColor: '#fff0'}] }>
-            {image
+        <View style={ [styles.item, (imageCondition) && {borderColor: '#fff0'}] }>
+            {imageCondition
                 ? (
                     <TouchableOpacity
                         style={ styles.remove }
@@ -53,7 +54,13 @@ export const ProfileImage = ({ image }) => {
             }
             {image && (
                 <Image
-                    source={ { uri: image } }
+                    source={{ uri: image }}
+                    style={ styles.image }
+                />
+            )}
+            {uploadedImage && (
+                <Image
+                    source={{ uri: uploadedImage }}
                     style={ styles.image }
                 />
             )}
@@ -64,7 +71,7 @@ export const ProfileImage = ({ image }) => {
 const styles = StyleSheet.create({
     item: {
         flex: 1,
-        borderRadius: 10,
+        borderRadius: 8,
         borderWidth: 2,
         borderStyle: 'dashed',
         borderColor: '#bbb'
@@ -94,6 +101,6 @@ const styles = StyleSheet.create({
     image: {
         flex: 1,
         resizeMode: 'cover',
-        borderRadius: 10,
+        borderRadius: 8,
     }
 })

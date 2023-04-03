@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
     aboutInput: {
         backgroundColor: '#fff',
         height: 70,
-        marginHorizontal: -15,
-        paddingHorizontal: 15
+        paddingHorizontal: 15,
+        borderRadius: 8
     },
     boxes: {
         flexDirection: "column",
