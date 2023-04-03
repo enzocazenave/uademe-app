@@ -34,8 +34,10 @@ export const ProfileScreen = () => {
                 style={ styles.container }
             >
                 <View style={ styles.profile }>
-                    <Text style={ styles.profileName }>Enzo Cazenave, <Text style={ styles.age }>19</Text></Text>
-                    <Text style={ styles.profileCareer }>Ingenieria en Informática</Text>
+                    <View>
+                        <Text style={ styles.profileName }>Enzo Cazenave, <Text style={ styles.age }>19</Text></Text>
+                        <Text style={ styles.profileCareer }>Ingenieria en Informática</Text>
+                    </View>
                     <Text style={ styles.aboutTitle }>Sobre mí</Text>
                     <TextInput
                         multiline={ true }
@@ -74,7 +76,7 @@ const styles = StyleSheet.create({
     },
     profile: {
         paddingHorizontal: 15,
-        gap: 5
+        gap: 10
     },  
     profileName: {
         fontSize: 25,
