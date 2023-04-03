@@ -31,8 +31,8 @@ export const ProfileImage = ({ image }) => {
                         activeOpacity={ 0.8 }
                     >
                         <Icon
-                            name="close"
-                            size={ 25 }
+                            name="more-horiz"
+                            size={ 23 }
                             color="#fff"
                         />
                     </TouchableOpacity>
