@@ -6,7 +6,9 @@ import {
     TextInput,
     TouchableOpacity,
     Image,
-    ActivityIndicator
+    ActivityIndicator,
+    TouchableWithoutFeedback,
+    Keyboard
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
@@ -14,10 +16,10 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import { useForm } from '../../hooks/useForm';
 
 const initialForm = {
-    name: 'Enzo',
-    surname: 'Cazenave',
-    email: 'ecazenave',
-    password: 'enzo24feb'
+    name: '',
+    surname: '',
+    email: '',
+    password: ''
 }
 
 export const RegisterScreen = ({ navigation }) => {
@@ -48,110 +50,118 @@ export const RegisterScreen = ({ navigation }) => {
     }
 
     return (
-        <View style={[ styles.container, { paddingTop: top + 10 }]}>
-            {(registerChecking)
-                ? (
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <ActivityIndicator size="large" color="#00f" />
-                    </View>
-                )
-                : (
-                    <>
-                        <View>
-                            <View style={ styles.header }>
-                                <Text style={ styles.headerText }>🌐 UadeMe</Text>
-                            </View>
-
-                            <View style={ styles.textContainer }>
-                                <Text style={[ styles.text, styles.textBold ]}>Diseñado exclusivamente para alumnos de UADE.</Text>
-                                <Text style={ styles.text }>
-                                    ¿Querés hacer amigos, conseguir apuntes de materias, buscar pareja, organizarte y saber más sobre nuestra universidad?
-
-                                    Estás en la aplicación indicada.
-                                </Text>
-                            </View>
+        <TouchableWithoutFeedback
+            onPress={ Keyboard.dismiss }
+        >
+            <View style={[ styles.container, { paddingTop: top + 10 }]}>
+                {(registerChecking)
+                    ? (
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                            <ActivityIndicator size="large" color="#00f" />
                         </View>
-
-                        <View style={ styles.form }>
-                            <Text style={ styles.formTitle }>Creá tu cuenta</Text>
-
-                            <TextInput
-                                style={[ styles.input, focus.name && { borderColor: '#0a85cc', borderWidth: 0.5 } ]}
-                                placeholder="Nombre"
-                                onFocus={ () => changeFocus('name', true) }
-                                onBlur={ () => changeFocus('name', false) }
-                                value={ name }
-                                onChangeText={ (text) => onInputChange(text, 'name') }
-                            />
-
-                            <TextInput
-                                style={[ styles.input, focus.surname && { borderColor: '#0a85cc', borderWidth: 0.5 } ]}
-                                placeholder="Apellido"
-                                onFocus={ () => changeFocus('surname', true) }
-                                onBlur={ () => changeFocus('surname', false) }
-                                value={ surname }
-                                onChangeText={ (text) => onInputChange(text, 'surname') }
-                            />
-
-                            <View style={ [styles.emailInputContainer, focus.email && { borderColor: '#0a85cc', borderWidth: 0.5 } ]}>
+                    )
+                    : (
+                        <>
+                            <View>
+                                <View style={ styles.header }>
+                                    <Text style={ styles.headerText }>🌐 UadeMe</Text>
+                                </View>
+                    
+                                <View style={ styles.textContainer }>
+                                    <Text style={[ styles.text, styles.textBold ]}>Diseñado exclusivamente para alumnos de UADE.</Text>
+                                    <Text style={ styles.text }>
+                                        ¿Querés hacer amigos, conseguir apuntes de materias, buscar pareja, organizarte y saber más sobre nuestra universidad?
+                    
+                                        Estás en la aplicación indicada.
+                                    </Text>
+                                </View>
+                            </View>
+                    
+                            <View style={ styles.form }>
+                                <Text style={ styles.formTitle }>Creá tu cuenta</Text>
+                    
                                 <TextInput
-                                    style={ styles.emailInput }
-                                    placeholder="Usuario "
-                                    onFocus={ () => changeFocus('email', true) }
-                                    onBlur={ () => changeFocus('email', false) }
-                                    value={ email }
-                                    onChangeText={ (text) => onInputChange(text, 'email') }
+                                    style={[ styles.input, focus.name && { borderColor: '#0a85cc', borderWidth: 0.5 } ]}
+                                    placeholder="Nombre"
+                                    onFocus={ () => changeFocus('name', true) }
+                                    onBlur={ () => changeFocus('name', false) }
+                                    placeholderTextColor={ "#ccc" }
+                                    value={ name }
+                                    onChangeText={ (text) => onInputChange(text, 'name') }
                                 />
-                                <Text style={ styles.emailDomain }>
-                                    @uade.edu.ar
-                                </Text>    
+    
+                                <TextInput
+                                    style={[ styles.input, focus.surname && { borderColor: '#0a85cc', borderWidth: 0.5 } ]}
+                                    placeholder="Apellido"
+                                    onFocus={ () => changeFocus('surname', true) }
+                                    onBlur={ () => changeFocus('surname', false) }
+                                    placeholderTextColor={ "#ccc" }
+                                    value={ surname }
+                                    onChangeText={ (text) => onInputChange(text, 'surname') }
+                                />
+    
+                                <View style={ [styles.emailInputContainer, focus.email && { borderColor: '#0a85cc', borderWidth: 0.5 } ]}>
+                                    <TextInput
+                                        style={ styles.emailInput }
+                                        placeholder="Usuario "
+                                        onFocus={ () => changeFocus('email', true) }
+                                        onBlur={ () => changeFocus('email', false) }
+                                        placeholderTextColor={ "#ccc" }
+                                        value={ email }
+                                        onChangeText={ (text) => onInputChange(text, 'email') }
+                                    />
+                                    <Text style={ styles.emailDomain }>
+                                        @uade.edu.ar
+                                    </Text>    
+                                </View>
+                    
+                                <TextInput
+                                    style={[ styles.input, focus.password && { borderColor: '#0a85cc', borderWidth: 0.5 } ]}
+                                    placeholder="Contraseña"
+                                    secureTextEntry
+                                    onFocus={ () => changeFocus('password', true) }
+                                    onBlur={ () => changeFocus('password', false) }
+                                    placeholderTextColor={ "#ccc" }
+                                    value={ password }
+                                    onChangeText={ (text) => onInputChange(text, 'password') }
+                                />
+    
+                                <TouchableOpacity
+                                    activeOpacity={ 0.7 }
+                                    style={ styles.submitButton }
+                                    onPress={ submit }
+                                > 
+                                    <Text style={ styles.submitButtonText } >Crear cuenta</Text>
+                                </TouchableOpacity>
+                    
+                                { (registerError) && <Text style={ styles.errorText }>{ registerError }</Text> }
+                    
+                                <TouchableOpacity 
+                                    activeOpacity={ 0.7 }
+                                    onPress={ Login }
+                                >
+                                    <Text style={ styles.register }>¿Ya tienes cuenta? Inicia sesión</Text>
+                                </TouchableOpacity>
                             </View>
-
-                            <TextInput
-                                style={[ styles.input, focus.password && { borderColor: '#0a85cc', borderWidth: 0.5 } ]}
-                                placeholder="Contraseña"
-                                secureTextEntry
-                                onFocus={ () => changeFocus('password', true) }
-                                onBlur={ () => changeFocus('password', false) }
-                                value={ password }
-                                onChangeText={ (text) => onInputChange(text, 'password') }
-                            />
-
-                            <TouchableOpacity
-                                activeOpacity={ 0.7 }
-                                style={ styles.submitButton }
-                                onPress={ submit }
-                            > 
-                                <Text style={ styles.submitButtonText } >Crear cuenta</Text>
-                            </TouchableOpacity>
-
-                            { (registerError) && <Text style={ styles.errorText }>{ registerError }</Text> }
-
-                            <TouchableOpacity 
-                                activeOpacity={ 0.7 }
-                                onPress={ Login }
+                    
+                            <View 
+                                style={ styles.imageContainer }
                             >
-                                <Text style={ styles.register }>¿Ya tienes cuenta? Inicia sesión</Text>
-                            </TouchableOpacity>
-                        </View>
-
-                        <View 
-                            style={ styles.imageContainer }
-                        >
-                            <Image
-                                source={ require('../../imgs/auth.jpg') }
-                                style={ styles.image }
-                            />
-                            <LinearGradient 
-                                style={ styles.gradient }
-                                colors={['#f0f0f0','transparent']}                
-                            />
-                        </View>
-                    </>
-                )
-            }
-            
-        </View>
+                                <Image
+                                    source={ require('../../imgs/auth.jpg') }
+                                    style={ styles.image }
+                                />
+                                <LinearGradient 
+                                    style={ styles.gradient }
+                                    colors={['#f0f0f0','transparent']}                
+                                />
+                            </View>
+                        </>
+                    )
+                }
+                
+            </View>
+        </TouchableWithoutFeedback>
     )
 }
 

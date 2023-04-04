@@ -6,7 +6,9 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    Image
+    Image,
+    TouchableWithoutFeedback,
+    Keyboard
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
@@ -41,79 +43,86 @@ export const LoginScreen = ({ navigation }) => {
     }
 
     return (
-        <View style={[ styles.container, { paddingTop: top + 10 }]}>
-            <View>
-                <View style={ styles.header }>
-                    <Text style={ styles.headerText }>🌐 UadeMe</Text>
+        <TouchableWithoutFeedback
+            onPress={ Keyboard.dismiss }
+        >
+            <View style={[ styles.container, { paddingTop: top + 10 }]}>
+                <View>
+                    <View style={ styles.header }>
+                        <Text style={ styles.headerText }>🌐 UadeMe</Text>
+                    </View>
+
+                    <View style={ styles.textContainer }>
+                        <Text style={[ styles.text, styles.textBold ]}>Diseñado exclusivamente para alumnos de UADE.</Text>
+                        <Text style={ styles.text }>
+                            ¿Querés hacer amigos, conseguir apuntes de materias, buscar pareja, organizarte y saber más sobre nuestra universidad?
+                            Estás en la aplicación indicada.
+                        </Text>
+                    </View>
                 </View>
 
-                <View style={ styles.textContainer }>
-                    <Text style={[ styles.text, styles.textBold ]}>Diseñado exclusivamente para alumnos de UADE.</Text>
-                    <Text style={ styles.text }>
-                        ¿Querés hacer amigos, conseguir apuntes de materias, buscar pareja, organizarte y saber más sobre nuestra universidad?
-                        Estás en la aplicación indicada.
-                    </Text>
-                </View>
-            </View>
+                <View style={ styles.form }>
+                    <Text style={ styles.formTitle }>Iniciá sesión</Text>
 
-            <View style={ styles.form }>
-                <Text style={ styles.formTitle }>Iniciá sesión</Text>
+                    <View style={ [styles.emailInputContainer, focus.email && { borderColor: '#0a85cc', borderWidth: 0.5 } ]}>
+                        <TextInput
+                            style={ styles.emailInput }
+                            placeholder="Usuario "
+                            onFocus={ () => changeFocus('email', true) }
+                            onBlur={ () => changeFocus('email', false) }
+                            placeholderTextColor={ "#ccc" }
+                            value={ email }
+                            onChangeText={ (text) => onInputChange(text, 'email') }
+                            />
+                        <Text style={ styles.emailDomain }>
+                            @uade.edu.ar
+                        </Text>    
+                    </View>
 
-                <View style={ [styles.emailInputContainer, focus.email && { borderColor: '#0a85cc', borderWidth: 0.5 } ]}>
                     <TextInput
-                        style={ styles.emailInput }
-                        placeholder="Usuario "
-                        onFocus={ () => changeFocus('email', true) }
-                        onBlur={ () => changeFocus('email', false) }
-                        value={ email }
-                        onChangeText={ (text) => onInputChange(text, 'email') }
-                        />
-                    <Text style={ styles.emailDomain }>
-                        @uade.edu.ar
-                    </Text>    
+                        style={[ styles.passwordInput, focus.password && { borderColor: '#0a85cc', borderWidth: 0.5 } ]}
+                        placeholder="Contraseña"
+                        secureTextEntry
+                        onFocus={ () => changeFocus('password', true) }
+                        onBlur={ () => changeFocus('password', false) }
+                        placeholderTextColor={ "#ccc" }
+                        value={ password }
+                        onChangeText={ (text) => onInputChange(text, 'password') }
+                    />
+
+                    <TouchableOpacity
+                        activeOpacity={ 0.7 }
+                        style={ styles.submitButton }
+                        onPress={ submit }
+                    > 
+                        <Text style={ styles.submitButtonText } >Iniciar sesión</Text>
+                    </TouchableOpacity>
+
+                    { (loginError) && <Text style={ styles.errorText }>{ loginError }</Text> }
+
+                    <TouchableOpacity 
+                        activeOpacity={ 0.7 }
+                        onPress={ Register }
+                    >
+                        <Text style={ styles.register }>¿No tienes cuenta? Regístrate</Text>
+                    </TouchableOpacity>
                 </View>
 
-                <TextInput
-                    style={[ styles.passwordInput, focus.password && { borderColor: '#0a85cc', borderWidth: 0.5 } ]}
-                    placeholder="Contraseña"
-                    secureTextEntry
-                    onFocus={ () => changeFocus('password', true) }
-                    onBlur={ () => changeFocus('password', false) }
-                    value={ password }
-                    onChangeText={ (text) => onInputChange(text, 'password') }
-                />
-
-                <TouchableOpacity
-                    activeOpacity={ 0.7 }
-                    style={ styles.submitButton }
-                    onPress={ submit }
-                > 
-                    <Text style={ styles.submitButtonText } >Iniciar sesión</Text>
-                </TouchableOpacity>
-
-                { (loginError) && <Text style={ styles.errorText }>{ loginError }</Text> }
-
-                <TouchableOpacity 
-                    activeOpacity={ 0.7 }
-                    onPress={ Register }
+                <View 
+                    style={ styles.imageContainer }
                 >
-                    <Text style={ styles.register }>¿No tienes cuenta? Regístrate</Text>
-                </TouchableOpacity>
+                    <Image
+                        source={ require('../../imgs/auth.jpg') }
+                        style={ styles.image }
+                    />
+                    <LinearGradient 
+                        style={ styles.gradient }
+                        colors={['#f0f0f0','transparent']}                
+                    />
+                </View>
             </View>
+        </TouchableWithoutFeedback>
 
-            <View 
-                style={ styles.imageContainer }
-            >
-                <Image
-                    source={ require('../../imgs/auth.jpg') }
-                    style={ styles.image }
-                />
-                <LinearGradient 
-                    style={ styles.gradient }
-                    colors={['#f0f0f0','transparent']}                
-                />
-            </View>
-        </View>
     )
 }
 
@@ -159,7 +168,7 @@ const styles = StyleSheet.create({
         borderWidth: 0.5
     },
     emailInput: {
-        fontSize: 18
+        fontSize: 18,
     },
     emailDomain: {
         fontSize: 18,

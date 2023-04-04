@@ -5,7 +5,9 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    Image
+    Image,
+    TouchableWithoutFeedback,
+    Keyboard
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
@@ -76,61 +78,66 @@ export const VerifyScreen = ({ navigation, route }) => {
     }
 
     return (
-        <View style={[ styles.container, { paddingTop: top + 10 }]}>
-            <View>
-                <View style={ styles.header }>
-                    <Text style={ styles.headerText }>🌐 UadeMe</Text>
+        <TouchableWithoutFeedback
+            onPress={Keyboard.dismiss}
+        >
+            <View style={[ styles.container, { paddingTop: top + 10 }]}>
+                <View>
+                    <View style={ styles.header }>
+                        <Text style={ styles.headerText }>🌐 UadeMe</Text>
+                    </View>
+
+                    <View style={ styles.textContainer }>
+                        <Text style={[ styles.text, styles.textBold ]}>Diseñado exclusivamente para alumnos de UADE.</Text>
+                        <Text style={ styles.text }>
+                            Hemos enviado un código de verificación de 6 dígitos a 
+                            <Text style={{ fontWeight: 600 }}> ecazenave@uade.edu.ar</Text>
+                            . Ve a buscarlo en tu bandeja de entrada o correo no deseado e ingrésalo para que verifiquémos que no eres un robot.
+                        </Text>
+                    </View>
                 </View>
 
-                <View style={ styles.textContainer }>
-                    <Text style={[ styles.text, styles.textBold ]}>Diseñado exclusivamente para alumnos de UADE.</Text>
-                    <Text style={ styles.text }>
-                        Hemos enviado un código de verificación de 6 dígitos a 
-                        <Text style={{ fontWeight: 600 }}> ecazenave@uade.edu.ar</Text>
-                        . Ve a buscarlo en tu bandeja de entrada o correo no deseado e ingrésalo para que verifiquémos que no eres un robot.
-                    </Text>
+                <View style={ styles.form }>
+                    <Text style={ styles.formTitle }>Código OTP</Text>
+
+                    <TextInput
+                        style={[ styles.input, focus.code && { borderColor: '#0a85cc', borderWidth: 0.5 } ]}
+                        placeholder="Código"
+                        keyboardType="number-pad"
+                        onFocus={ () => changeFocus('code', true) }
+                        onBlur={ () => changeFocus('code', false) }
+                        onChangeText={ (text) => onInputChange(text, 'otp') }
+                        placeholderTextColor={ "#ccc" }
+                        value={ otp }
+                    />
+
+                    <TouchableOpacity
+                        activeOpacity={ 0.7 }
+                        style={ styles.submitButton }
+                        onPress={ verifyCode }
+                    > 
+                        <Text style={ styles.submitButtonText } >Verificar código</Text>
+                    </TouchableOpacity>
+
+                    { (otpError) && <Text style={ styles.errorText }>{ otpError }</Text> }
+
+                    <CountDown />
+                </View>
+
+                <View 
+                    style={ styles.imageContainer }
+                >
+                    <Image
+                        source={ require('../../imgs/auth.jpg') }
+                        style={ styles.image }
+                    />
+                    <LinearGradient 
+                        style={ styles.gradient }
+                        colors={['#f0f0f0','transparent']}                
+                    />
                 </View>
             </View>
-
-            <View style={ styles.form }>
-                <Text style={ styles.formTitle }>Código OTP</Text>
-
-                <TextInput
-                    style={[ styles.input, focus.code && { borderColor: '#0a85cc', borderWidth: 0.5 } ]}
-                    placeholder="Código"
-                    keyboardType="number-pad"
-                    onFocus={ () => changeFocus('code', true) }
-                    onBlur={ () => changeFocus('code', false) }
-                    onChangeText={ (text) => onInputChange(text, 'otp') }
-                    value={ otp }
-                />
-
-                <TouchableOpacity
-                    activeOpacity={ 0.7 }
-                    style={ styles.submitButton }
-                    onPress={ verifyCode }
-                > 
-                    <Text style={ styles.submitButtonText } >Verificar código</Text>
-                </TouchableOpacity>
-
-                { (otpError) && <Text style={ styles.errorText }>{ otpError }</Text> }
-
-                <CountDown />
-            </View>
-
-            <View 
-                style={ styles.imageContainer }
-            >
-                <Image
-                    source={ require('../../imgs/auth.jpg') }
-                    style={ styles.image }
-                />
-                <LinearGradient 
-                    style={ styles.gradient }
-                    colors={['#f0f0f0','transparent']}                
-                />
-            </View>
-        </View>
+        </TouchableWithoutFeedback>
     )
 }
 
