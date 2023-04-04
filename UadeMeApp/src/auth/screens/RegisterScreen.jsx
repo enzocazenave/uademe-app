@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     View,
     StyleSheet,
+    Animated,
     Text,
     TextInput,
     TouchableOpacity,
@@ -14,6 +15,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useForm } from '../../hooks/useForm';
+import { useFade } from '../../hooks/useFade';
 
 const initialForm = {
     name: '',
@@ -23,12 +25,17 @@ const initialForm = {
 }
 
 export const RegisterScreen = ({ navigation }) => {
-
+    
+    const { opacity, fadeIn } = useFade();
     const { top } = useSafeAreaInsets();
     const [focus, setFocus] = useState({ name: false, surname: false, email: false, password: false });
     const { register, registerError } = useAuthContext();
     const { name, surname, email, password, onInputChange } = useForm(initialForm);
     const [registerChecking, setRegisterChecking] = useState(false);
+    
+    useEffect(() => {
+        fadeIn();
+    }, []);
 
     const changeFocus = (input, bool) => {
         setFocus((prevState) => ({
@@ -53,7 +60,7 @@ export const RegisterScreen = ({ navigation }) => {
         <TouchableWithoutFeedback
             onPress={ Keyboard.dismiss }
         >
-            <View style={[ styles.container, { paddingTop: top + 10 }]}>
+            <Animated.View style={[ styles.container, { paddingTop: top + 10, opacity: opacity }]}>
                 {(registerChecking)
                     ? (
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -160,7 +167,7 @@ export const RegisterScreen = ({ navigation }) => {
                     )
                 }
                 
-            </View>
+            </Animated.View>
         </TouchableWithoutFeedback>
     )
 }

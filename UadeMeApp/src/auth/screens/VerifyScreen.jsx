@@ -7,12 +7,14 @@ import {
     TouchableOpacity,
     Image,
     TouchableWithoutFeedback,
-    Keyboard
+    Keyboard,
+    Animated
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import { useForm } from '../../hooks/useForm';
 import { useAuthContext } from '../../hooks/useAuthContext';
+import { useFade } from '../../hooks/useFade';
 
 const CountDown = () => {
     const [countdown, setCountdown] = useState(59);
@@ -57,6 +59,11 @@ export const VerifyScreen = ({ navigation, route }) => {
     const [focus, setFocus] = useState({ code: false });
     const { onInputChange, otp } = useForm(initialForm);
     const { verifyCode: verifyOtp, otpError, setRegisterError } = useAuthContext();
+    const { opacity, fadeIn } = useFade();
+
+    useEffect(() => {
+        fadeIn();
+    }, []);
 
     const changeFocus = (input, bool) => {
         setFocus((prevState) => ({
@@ -81,7 +88,7 @@ export const VerifyScreen = ({ navigation, route }) => {
         <TouchableWithoutFeedback
             onPress={Keyboard.dismiss}
         >
-            <View style={[ styles.container, { paddingTop: top + 10 }]}>
+            <Animated.View style={[ styles.container, { paddingTop: top + 10, opacity: opacity }]}>
                 <View>
                     <View style={ styles.header }>
                         <Text style={ styles.headerText }>🌐 UadeMe</Text>
@@ -136,7 +143,7 @@ export const VerifyScreen = ({ navigation, route }) => {
                         colors={['#f0f0f0','transparent']}                
                     />
                 </View>
-            </View>
+            </Animated.View>
         </TouchableWithoutFeedback>
     )
 }

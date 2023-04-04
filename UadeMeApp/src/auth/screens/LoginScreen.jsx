@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     View,
+    Animated,
     Dimensions,
     StyleSheet,
     Text,
@@ -14,6 +15,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import { useForm } from '../../hooks/useForm';
 import { useAuthContext } from '../../hooks/useAuthContext';
+import { useFade } from '../../hooks/useFade';
 
 const initialForm = {
     email: '',
@@ -26,6 +28,11 @@ export const LoginScreen = ({ navigation }) => {
     const [focus, setFocus] = useState({ email: false, password: false });
     const { email, password, onInputChange } = useForm(initialForm);
     const { login, loginError } = useAuthContext();
+    const { opacity, fadeIn } = useFade();
+
+    useEffect(() => {
+        fadeIn();
+    }, []);
 
     const changeFocus = (input, bool) => {
         setFocus((prevState) => ({
@@ -46,7 +53,7 @@ export const LoginScreen = ({ navigation }) => {
         <TouchableWithoutFeedback
             onPress={ Keyboard.dismiss }
         >
-            <View style={[ styles.container, { paddingTop: top + 10 }]}>
+            <Animated.View style={[ styles.container, { paddingTop: top + 10, opacity: opacity }]}>
                 <View>
                     <View style={ styles.header }>
                         <Text style={ styles.headerText }>🌐 UadeMe</Text>
@@ -120,7 +127,7 @@ export const LoginScreen = ({ navigation }) => {
                         colors={['#f0f0f0','transparent']}                
                     />
                 </View>
-            </View>
+            </Animated.View>
         </TouchableWithoutFeedback>
 
     )

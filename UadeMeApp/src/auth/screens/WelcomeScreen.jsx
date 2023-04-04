@@ -3,20 +3,27 @@ import {
     StyleSheet,
     Text,
     TouchableOpacity,
-    Image
+    Image,
+    Animated
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as Animatable from 'react-native-animatable';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFade } from '../../hooks/useFade';
 
 export const WelcomeScreen = ({ navigation, route }) => {
 
     const { top } = useSafeAreaInsets();
     const { setUser, resetError } = useContext(AuthContext);
+    const { opacity, fadeIn } = useFade();
+
+    useEffect(() => {
+        fadeIn();
+    }, []);
 
     const Continue = async() => {
         await AsyncStorage.setItem('@uademe:token', route.params.token);
@@ -26,7 +33,7 @@ export const WelcomeScreen = ({ navigation, route }) => {
     }
 
     return (
-        <View style={[ styles.container, { paddingTop: top + 10 }]}>
+        <Animated.View style={[ styles.container, { paddingTop: top + 10, opacity: opacity }]}>
             <View style={ styles.header }>
                 <Text style={ styles.headerText }>🌐 UadeMe</Text>
             </View>
@@ -78,7 +85,7 @@ export const WelcomeScreen = ({ navigation, route }) => {
                     colors={['#f0f0f0','transparent']}                
                 />
             </View>
-        </View>
+        </Animated.View>
     )
 }
 
