@@ -31,7 +31,6 @@ export const AuthProvider = ({ children }) => {
         } catch(error) {
             setUser({});
             setIsChecking(false);
-            console.log(error.response?.data);
         }
     }
 
@@ -42,7 +41,8 @@ export const AuthProvider = ({ children }) => {
                 user,
                 setAction,
                 setUser,
-                isChecking
+                isChecking,
+                setIsChecking
             }}
         >
             { children }

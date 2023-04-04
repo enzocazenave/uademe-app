@@ -1,11 +1,11 @@
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { useMemo } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export const Header = ({ screen }) => {
+export const Header = ({ screen, navigation }) => {
     const { top } = useSafeAreaInsets();
+    const { name } = useRoute();
 
     if (screen == 'CoupleScreen') return (
         <View style={ [stylesCouple.container, { paddingTop: top + 5}] }>
@@ -28,7 +28,7 @@ export const Header = ({ screen }) => {
         </View>
     )
 
-    if (screen == 'ProfileScreen') return (
+    if (screen == 'ProfileScreen' || screen == 'SettingsScreen') return (
         <View style={ [stylesProfile.container, { paddingTop: top + 5}] }>
             
             <View style={ stylesProfile.titleContainer }> 
@@ -42,11 +42,18 @@ export const Header = ({ screen }) => {
                 </Text>
             </View>
             
-            <Icon
-                style={ stylesProfile.settings }
-                name="settings-outline"
-                size={ 25 }
-            />
+            { (screen == 'ProfileScreen') &&
+                <TouchableOpacity
+                    activeOpacity={ 0.7 }
+                    onPress={ () => navigation.navigate('ProfileStack', { screen: 'SettingsScreen' }) } 
+                >
+                    <Icon
+                        style={ stylesProfile.settings }
+                        name="settings-outline"
+                        size={ 25 }
+                    />
+                </TouchableOpacity>
+            }
         </View>
     )
 

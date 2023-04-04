@@ -10,11 +10,20 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
+import { useForm } from '../../hooks/useForm';
+import { useAuthContext } from '../../hooks/useAuthContext';
+
+const initialForm = {
+    email: '',
+    password: ''
+}
 
 export const LoginScreen = ({ navigation }) => {
 
     const { top } = useSafeAreaInsets();
     const [focus, setFocus] = useState({ email: false, password: false });
+    const { email, password, onInputChange } = useForm(initialForm);
+    const { login, loginError } = useAuthContext();
 
     const changeFocus = (input, bool) => {
         setFocus((prevState) => ({
@@ -25,6 +34,10 @@ export const LoginScreen = ({ navigation }) => {
 
     const Register = () => {
         navigation.navigate('RegisterScreen');
+    }
+
+    const submit = () => {
+        login({ email, password });
     }
 
     return (
@@ -52,7 +65,9 @@ export const LoginScreen = ({ navigation }) => {
                         placeholder="Usuario "
                         onFocus={ () => changeFocus('email', true) }
                         onBlur={ () => changeFocus('email', false) }
-                    />
+                        value={ email }
+                        onChangeText={ (text) => onInputChange(text, 'email') }
+                        />
                     <Text style={ styles.emailDomain }>
                         @uade.edu.ar
                     </Text>    
@@ -64,14 +79,19 @@ export const LoginScreen = ({ navigation }) => {
                     secureTextEntry
                     onFocus={ () => changeFocus('password', true) }
                     onBlur={ () => changeFocus('password', false) }
+                    value={ password }
+                    onChangeText={ (text) => onInputChange(text, 'password') }
                 />
 
                 <TouchableOpacity
                     activeOpacity={ 0.7 }
                     style={ styles.submitButton }
+                    onPress={ submit }
                 > 
                     <Text style={ styles.submitButtonText } >Iniciar sesión</Text>
                 </TouchableOpacity>
+
+                { (loginError) && <Text style={ styles.errorText }>{ loginError }</Text> }
 
                 <TouchableOpacity 
                     activeOpacity={ 0.7 }
@@ -181,5 +201,10 @@ const styles = StyleSheet.create({
     image: {
         width: '130%',
         height: '70%'
+    },
+    errorText: {
+        fontSize: 15,
+        color: '#f00',
+        textAlign: 'center'
     }
 });

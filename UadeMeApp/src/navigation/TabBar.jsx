@@ -25,7 +25,7 @@ const icons = {
         notFocused: 'location-outline',
         color: '#098B21'
     },
-    ProfileScreen: {
+    ProfileStack: {
         focused: 'person',
         notFocused: 'person-outline',
         color: '#000'
@@ -43,7 +43,7 @@ export const TabBar = ({ state, descriptors, }) => {
             {state.routes.map((route, index) => {
                 const screen = route.name; 
                 const title = descriptors[route.key].options.tabBarLabel;
-                const isFocused = state.index === index
+                const isFocused = state.index === index;
 
                 return (
                     <TabButton 

@@ -6,13 +6,15 @@ const backend = axios.create({
     baseURL: API_URL
 });
 
-backend.interceptors.request.use(config => {
-    config.headers = {
-        ...config.headers,
-        'x-token': AsyncStorage.getItem('@uademe:token')
-    };
+backend.interceptors.request.use(
+    async(config) => {
+        config.headers = {
+            ...config.headers,
+            'x-token': await AsyncStorage.getItem('@uademe:token')
+        };
 
-    return config;
-})
+        return config;
+    }
+);
 
 export default backend;

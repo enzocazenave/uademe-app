@@ -6,22 +6,48 @@ import { TabBar } from './TabBar';
 import { Header } from './Header';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { Text, View } from 'react-native';
+import { SettingsScreen } from '../app/screens/SettingsScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+const LoggedNavigation = () => {
+    return (
+        <Stack.Navigator 
+            screenOptions={{ 
+                headerShown: true, 
+                gestureEnabled: false,
+                header: ({ navigation, route }) => (
+                    <Header screen={ route.name } navigation={ navigation } />
+                ),
+                animation: 'none'
+            }}
+        >
+            <Stack.Screen name="ProfileScreen" component={ ProfileScreen } />
+            <Stack.Screen name="SettingsScreen" component={ SettingsScreen } />
+        </Stack.Navigator>
+    )
+}
+
 export const Navigation = () => {
 
-    const { user } = useContext(AuthContext);
+    const { user, isChecking } = useContext(AuthContext);
+
+    if (isChecking) return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={{ fontSize: 25, color: '#00f' }}>Cargando</Text>
+        </View>
+    )
 
     return (<>
-        {(user.id)
+        {(user._id)
             ? (
                 <Tab.Navigator
                     screenOptions={{
-                        header:  ({ navigation, route, options }) => {
-                            return <Header screen={ route.name } />
-                        }
+                        header:  ({ navigation, route, options }) => (
+                            <Header screen={ route.name } navigation={ navigation } />
+                        )
                     }}
                     tabBar={ (props) => <TabBar { ...props } /> }
                 >
@@ -46,8 +72,8 @@ export const Navigation = () => {
                         options={{ tabBarLabel: 'Mapa' }}
                     />
                     <Tab.Screen 
-                        name="ProfileScreen" 
-                        component={ ProfileScreen } 
+                        name="ProfileStack" 
+                        component={ LoggedNavigation } 
                         options={{ tabBarLabel: 'Perfil' }}
                     />
                 </Tab.Navigator>

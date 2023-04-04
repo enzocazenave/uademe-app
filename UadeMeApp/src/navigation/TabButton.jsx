@@ -1,18 +1,22 @@
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useMemo } from 'react';
 
 export const TabButton = ({ screen, title, icon, isFocused }) => {
     const navigation = useNavigation();
 
+    const onPress = () => {
+        if (screen !== 'ProfileStack') return navigation.navigate(screen);
+        navigation.navigate('ProfileStack', { screen: 'ProfileScreen' });
+    }
+
     return (
         <TouchableOpacity
-            onPress={ () => navigation.navigate(screen) }
+            onPress={ onPress }
             style={ styles.button }
             activeOpacity={ 0.4 }
         >
-            {(screen !== 'ProfileScreen')
+            {(screen !== 'ProfileStack')
             ? (
                 <Icon
                     size={ 35 }
