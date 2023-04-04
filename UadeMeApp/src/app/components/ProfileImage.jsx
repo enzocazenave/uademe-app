@@ -17,8 +17,11 @@ export const ProfileImage = ({ image }) => {
     const uploadImage = () => {
         launchImageLibrary(imagePickerConfig, (response) => {
             if (response.didCancel) return;
-            setUploadedImage(response?.assets[0].uri);
-        })
+            const { uri, width, height, fileSize } = response.assets[0];
+            if (width == 0 || height == 0 || fileSize == 0) return;
+
+            setUploadedImage(uri);
+        });
     }
 
     const imageCondition = image || uploadedImage;

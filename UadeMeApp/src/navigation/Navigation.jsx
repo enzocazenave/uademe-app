@@ -3,15 +3,19 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { CommunitiesScreen, CoupleScreen, SubjectsScreen, MapScreen, ProfileScreen } from '../app/screens';
 import { LoginScreen, RegisterScreen, VerifyScreen, WelcomeScreen } from '../auth/screens';
 import { TabBar } from './TabBar';
-import { getHeaderTitle } from '@react-navigation/elements';
 import { Header } from './Header';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export const Navigation = () => {
+
+    const { user } = useContext(AuthContext);
+
     return (<>
-        {(true)
+        {(user.id)
             ? (
                 <Tab.Navigator
                     screenOptions={{

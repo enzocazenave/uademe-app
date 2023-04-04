@@ -3,15 +3,12 @@ import {
     View,
     Text,
     StyleSheet,
-    FlatList,
     Dimensions,
     TextInput,
     TouchableWithoutFeedback,
     Keyboard,
-    KeyboardAvoidingView
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ProfileImage } from '../components/';
+import { ProfileImage } from '../components';
 
 const { height: screenHeight } = Dimensions.get('screen');
 
