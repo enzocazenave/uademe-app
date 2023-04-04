@@ -30,7 +30,7 @@ export const SettingsScreen = () => {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20
+        padding: 15
     },
     button: {
         flexDirection: 'row',

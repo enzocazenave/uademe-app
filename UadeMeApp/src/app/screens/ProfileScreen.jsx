@@ -9,11 +9,13 @@ import {
     Keyboard,
 } from 'react-native';
 import { ProfileImage } from '../components';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 const { height: screenHeight } = Dimensions.get('screen');
 
 export const ProfileScreen = () => {
     const [images, setImages] = useState([]);
+    const { user } = useAuthContext();
 
     useEffect(() => {
         setImages((prev) => {
@@ -32,7 +34,7 @@ export const ProfileScreen = () => {
             >
                 <View style={ styles.profile }>
                     <View>
-                        <Text style={ styles.profileName }>Enzo Cazenave, <Text style={ styles.age }>19</Text></Text>
+                        <Text style={ styles.profileName }>{ user.name } { user.surname }, <Text style={ styles.age }>19</Text></Text>
                         <Text style={ styles.profileCareer }>Ingenieria en Informática</Text>
                     </View>
                     <Text style={ styles.aboutTitle }>Sobre mí</Text>

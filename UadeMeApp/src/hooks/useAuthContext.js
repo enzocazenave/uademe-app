@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 
 export const useAuthContext = () => {
 
-    const { setUser, setIsChecking, setLoginError, setRegisterError, setOtpError, loginError, registerError, otpError } = useContext(AuthContext);
+    const { setUser, setIsChecking, setLoginError, setRegisterError, setOtpError, loginError, registerError, otpError, user } = useContext(AuthContext);
 
     const login = async(credentials) => {
         const { email, password } = credentials;
@@ -87,6 +87,7 @@ export const useAuthContext = () => {
         loginError,
         registerError,
         setRegisterError,
-        otpError
+        otpError,
+        user
     }
 }

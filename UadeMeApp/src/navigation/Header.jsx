@@ -71,7 +71,6 @@ const stylesCouple = StyleSheet.create({
         position: 'absolute',
         right: 10,
         top: 54,
-        padding: 100,
     },
     titleContainer: {
         flex: 1,

@@ -21,7 +21,7 @@ const LoggedNavigation = () => {
                 header: ({ navigation, route }) => (
                     <Header screen={ route.name } navigation={ navigation } />
                 ),
-                animation: 'none'
+                animation: 'fade'
             }}
         >
             <Stack.Screen name="ProfileScreen" component={ ProfileScreen } />
