@@ -6,7 +6,7 @@ import { TabBar } from './TabBar';
 import { Header } from './Header';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { Text, View } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { SettingsScreen } from '../app/screens/SettingsScreen';
 
 const Stack = createNativeStackNavigator();
@@ -36,12 +36,12 @@ export const Navigation = () => {
 
     if (isChecking) return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ fontSize: 25, color: '#00f' }}>Cargando</Text>
+            <ActivityIndicator size="large" color="#00f" />
         </View>
     )
 
     return (<>
-        {(user._id)
+        {(user?._id)
             ? (
                 <Tab.Navigator
                     screenOptions={{
@@ -79,15 +79,13 @@ export const Navigation = () => {
                 </Tab.Navigator>
             )
             : (
-                <Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false, /*animation: 'fade_from_bottom'*/  }} >
-                    <Stack.Screen name="RegisterScreen" component={ RegisterScreen } />
+                <Stack.Navigator  screenOptions={{ animation: 'none', headerShown: false, gestureEnabled: false /*animation: 'fade_from_bottom'*/  }} >
                     <Stack.Screen name="LoginScreen" component={ LoginScreen } />
+                    <Stack.Screen name="RegisterScreen" component={ RegisterScreen } />
                     <Stack.Screen name="VerifyScreen" component={ VerifyScreen } />
                     <Stack.Screen name="WelcomeScreen" component={ WelcomeScreen } />
                 </Stack.Navigator>
             )
         }
-        
-
     </>)
 }

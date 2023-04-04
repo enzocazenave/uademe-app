@@ -9,13 +9,20 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as Animatable from 'react-native-animatable';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const WelcomeScreen = ({ navigation }) => {
+export const WelcomeScreen = ({ navigation, route }) => {
 
     const { top } = useSafeAreaInsets();
+    const { setUser, resetError } = useContext(AuthContext);
 
-    const Continue = () => {
-        
+    const Continue = async() => {
+        await AsyncStorage.setItem('@uademe:token', route.params.token);
+        delete route.params.token;
+        setUser(route.params);
+        resetError();
     }
 
     return (

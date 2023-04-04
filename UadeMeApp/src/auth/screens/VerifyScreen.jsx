@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
+import { useForm } from '../../hooks/useForm';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 const CountDown = () => {
     const [countdown, setCountdown] = useState(59);
@@ -43,10 +45,16 @@ const CountDown = () => {
     )
 }
 
-export const VerifyScreen = ({ navigation }) => {
+const initialForm = {
+    otp: ''
+}
+
+export const VerifyScreen = ({ navigation, route }) => {
 
     const { top } = useSafeAreaInsets();
     const [focus, setFocus] = useState({ code: false });
+    const { onInputChange, otp } = useForm(initialForm);
+    const { verifyCode: verifyOtp, otpError, setRegisterError } = useAuthContext();
 
     const changeFocus = (input, bool) => {
         setFocus((prevState) => ({
@@ -56,8 +64,15 @@ export const VerifyScreen = ({ navigation }) => {
     }
 
     const verifyCode = () => {
-        navigation.pop();
-        navigation.navigate('WelcomeScreen');
+        verifyOtp({ ...route.params, otp }).then(res => {
+            if (res) return navigation.navigate('WelcomeScreen', res.session);
+            if (res === false) {
+                navigation.navigate('RegisterScreen');
+                setRegisterError('El código OTP ingresado es inválido.')
+                return;
+            }
+            
+        })
     }
 
     return (
@@ -86,6 +101,8 @@ export const VerifyScreen = ({ navigation }) => {
                     keyboardType="number-pad"
                     onFocus={ () => changeFocus('code', true) }
                     onBlur={ () => changeFocus('code', false) }
+                    onChangeText={ (text) => onInputChange(text, 'otp') }
+                    value={ otp }
                 />
 
                 <TouchableOpacity
@@ -95,6 +112,8 @@ export const VerifyScreen = ({ navigation }) => {
                 > 
                     <Text style={ styles.submitButtonText } >Verificar código</Text>
                 </TouchableOpacity>
+
+                { (otpError) && <Text style={ styles.errorText }>{ otpError }</Text> }
 
                 <CountDown />
             </View>
@@ -208,5 +227,10 @@ const styles = StyleSheet.create({
     image: {
         width: '130%',
         height: '70%'
+    },
+    errorText: {
+        fontSize: 15,
+        color: '#f00',
+        textAlign: 'center'
     }
 });

@@ -9,6 +9,15 @@ export const AuthProvider = ({ children }) => {
     const [action, setAction] = useState('login');
     const [isChecking, setIsChecking] = useState(true);
     const [user, setUser] = useState({});
+    const [loginError, setLoginError] = useState('');
+    const [registerError, setRegisterError] = useState('');
+    const [otpError, setOtpError] = useState('');
+
+    const resetError = () => {
+        setLoginError('');
+        setRegisterError('');
+        setOtpError('');
+    }
 
     useEffect(() => {
         validateToken();
@@ -42,7 +51,14 @@ export const AuthProvider = ({ children }) => {
                 setAction,
                 setUser,
                 isChecking,
-                setIsChecking
+                setIsChecking,
+                setLoginError,
+                setRegisterError,
+                setOtpError,
+                loginError, 
+                registerError,
+                otpError,
+                resetError
             }}
         >
             { children }

@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* UadeMeAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* UadeMeAppTests.m */; };
-		0C80B921A6F3F58F76C31292 /* libPods-UadeMeApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-UadeMeApp.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		7699B88040F8A987B510C191 /* libPods-UadeMeApp-UadeMeAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-UadeMeApp-UadeMeAppTests.a */; };
+		1E4C2FBBFC1C83D29DAA1DF0 /* libPods-UadeMeApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0663B53F1BD246CCEE8854A4 /* libPods-UadeMeApp.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		A2D3F7E3A86E85C9622A47A3 /* libPods-UadeMeApp-UadeMeAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A46669E914AA3A9750C84EFD /* libPods-UadeMeApp-UadeMeAppTests.a */; };
 		DB581D1B29D7A4AD00E5029B /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB581D0B29D7A4AD00E5029B /* FontAwesome.ttf */; };
 		DB581D1C29D7A4AD00E5029B /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB581D0C29D7A4AD00E5029B /* MaterialCommunityIcons.ttf */; };
 		DB581D1D29D7A4AD00E5029B /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB581D0D29D7A4AD00E5029B /* Entypo.ttf */; };
@@ -46,19 +46,21 @@
 		00E356EE1AD99517003FC87E /* UadeMeAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UadeMeAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* UadeMeAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UadeMeAppTests.m; sourceTree = "<group>"; };
+		0663B53F1BD246CCEE8854A4 /* libPods-UadeMeApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UadeMeApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* UadeMeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UadeMeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = UadeMeApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = UadeMeApp/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = UadeMeApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = UadeMeApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = UadeMeApp/main.m; sourceTree = "<group>"; };
-		19F6CBCC0A4E27FBF8BF4A61 /* libPods-UadeMeApp-UadeMeAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UadeMeApp-UadeMeAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D8FB189C0FA5B0E7C6F3ABF /* Pods-UadeMeAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UadeMeAppTests.release.xcconfig"; path = "Target Support Files/Pods-UadeMeAppTests/Pods-UadeMeAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-UadeMeApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UadeMeApp.debug.xcconfig"; path = "Target Support Files/Pods-UadeMeApp/Pods-UadeMeApp.debug.xcconfig"; sourceTree = "<group>"; };
+		3D17F9F6AD417C24DD675903 /* Pods-UadeMeAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UadeMeAppTests.debug.xcconfig"; path = "Target Support Files/Pods-UadeMeAppTests/Pods-UadeMeAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-UadeMeApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UadeMeApp.release.xcconfig"; path = "Target Support Files/Pods-UadeMeApp/Pods-UadeMeApp.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-UadeMeApp-UadeMeAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UadeMeApp-UadeMeAppTests.debug.xcconfig"; path = "Target Support Files/Pods-UadeMeApp-UadeMeAppTests/Pods-UadeMeApp-UadeMeAppTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5DCACB8F33CDC322A6C60F78 /* libPods-UadeMeApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UadeMeApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = UadeMeApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-UadeMeApp-UadeMeAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UadeMeApp-UadeMeAppTests.release.xcconfig"; path = "Target Support Files/Pods-UadeMeApp-UadeMeAppTests/Pods-UadeMeApp-UadeMeAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		A46669E914AA3A9750C84EFD /* libPods-UadeMeApp-UadeMeAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UadeMeApp-UadeMeAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB581D0B29D7A4AD00E5029B /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		DB581D0C29D7A4AD00E5029B /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		DB581D0D29D7A4AD00E5029B /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
@@ -83,7 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7699B88040F8A987B510C191 /* libPods-UadeMeApp-UadeMeAppTests.a in Frameworks */,
+				A2D3F7E3A86E85C9622A47A3 /* libPods-UadeMeApp-UadeMeAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,7 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C80B921A6F3F58F76C31292 /* libPods-UadeMeApp.a in Frameworks */,
+				1E4C2FBBFC1C83D29DAA1DF0 /* libPods-UadeMeApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,8 +135,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				5DCACB8F33CDC322A6C60F78 /* libPods-UadeMeApp.a */,
-				19F6CBCC0A4E27FBF8BF4A61 /* libPods-UadeMeApp-UadeMeAppTests.a */,
+				0663B53F1BD246CCEE8854A4 /* libPods-UadeMeApp.a */,
+				A46669E914AA3A9750C84EFD /* libPods-UadeMeApp-UadeMeAppTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -177,6 +179,8 @@
 				5709B34CF0A7D63546082F79 /* Pods-UadeMeApp.release.xcconfig */,
 				5B7EB9410499542E8C5724F5 /* Pods-UadeMeApp-UadeMeAppTests.debug.xcconfig */,
 				89C6BE57DB24E9ADA2F236DE /* Pods-UadeMeApp-UadeMeAppTests.release.xcconfig */,
+				3D17F9F6AD417C24DD675903 /* Pods-UadeMeAppTests.debug.xcconfig */,
+				1D8FB189C0FA5B0E7C6F3ABF /* Pods-UadeMeAppTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -215,8 +219,8 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */,
-				F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */,
+				CFBB30963EE278BAC66BDDCD /* [CP] Embed Pods Frameworks */,
+				0BF59B2FB9D13F1AFAF3AFE6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -238,8 +242,8 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
-				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
+				A883A1CA26B62851D9698A6A /* [CP] Embed Pods Frameworks */,
+				3DA1A5A0B060D6917F7ACD1D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -338,21 +342,38 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
+		0BF59B2FB9D13F1AFAF3AFE6 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-UadeMeApp/Pods-UadeMeApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-UadeMeApp-UadeMeAppTests/Pods-UadeMeApp-UadeMeAppTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-UadeMeApp/Pods-UadeMeApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-UadeMeApp-UadeMeAppTests/Pods-UadeMeApp-UadeMeAppTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-UadeMeApp/Pods-UadeMeApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-UadeMeApp-UadeMeAppTests/Pods-UadeMeApp-UadeMeAppTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3DA1A5A0B060D6917F7ACD1D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UadeMeApp/Pods-UadeMeApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UadeMeApp/Pods-UadeMeApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-UadeMeApp/Pods-UadeMeApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
@@ -377,6 +398,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		A883A1CA26B62851D9698A6A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UadeMeApp/Pods-UadeMeApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UadeMeApp/Pods-UadeMeApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-UadeMeApp/Pods-UadeMeApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -399,7 +437,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */ = {
+		CFBB30963EE278BAC66BDDCD /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -414,40 +452,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-UadeMeApp-UadeMeAppTests/Pods-UadeMeApp-UadeMeAppTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-UadeMeApp/Pods-UadeMeApp-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-UadeMeApp/Pods-UadeMeApp-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-UadeMeApp/Pods-UadeMeApp-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-UadeMeApp-UadeMeAppTests/Pods-UadeMeApp-UadeMeAppTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-UadeMeApp-UadeMeAppTests/Pods-UadeMeApp-UadeMeAppTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-UadeMeApp-UadeMeAppTests/Pods-UadeMeApp-UadeMeAppTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
