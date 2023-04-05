@@ -141,7 +141,7 @@ export const RegisterScreen = ({ navigation }) => {
                                     <Text style={ styles.submitButtonText } >Crear cuenta</Text>
                                 </TouchableOpacity>
                     
-                                { (registerError) && <Text style={ styles.errorText }>{ registerError }</Text> }
+                                <Text style={ styles.errorText }>{ registerError }</Text>
                     
                                 <TouchableOpacity 
                                     activeOpacity={ 0.7 }
@@ -260,6 +260,7 @@ const styles = StyleSheet.create({
     errorText: {
         fontSize: 15,
         color: '#f00',
-        textAlign: 'center'
+        textAlign: 'center',
+        height: 20
     }
 });

@@ -105,7 +105,7 @@ export const LoginScreen = ({ navigation }) => {
                         <Text style={ styles.submitButtonText } >Iniciar sesión</Text>
                     </TouchableOpacity>
 
-                    { (loginError) && <Text style={ styles.errorText }>{ loginError }</Text> }
+                    <Text style={ styles.errorText }>{ loginError }</Text>
 
                     <TouchableOpacity 
                         activeOpacity={ 0.7 }
@@ -221,6 +221,7 @@ const styles = StyleSheet.create({
     errorText: {
         fontSize: 15,
         color: '#f00',
-        textAlign: 'center'
+        textAlign: 'center',
+        height: 20
     }
 });
