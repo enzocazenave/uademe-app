@@ -34,7 +34,7 @@ export const ProfileScreen = () => {
             >
                 <View style={ styles.profile }>
                     <View>
-                        <Text style={ styles.profileName }>{ user.name } { user.surname }, <Text style={ styles.age }>19</Text></Text>
+                        <Text style={ styles.profileName }>{ user.name } { user.surname }Enzo Cazenave, <Text style={ styles.age }>19</Text></Text>
                         <Text style={ styles.profileCareer }>Ingenieria en Informática</Text>
                     </View>
                     <Text style={ styles.aboutTitle }>Sobre mí</Text>

@@ -21,7 +21,7 @@ const LoggedNavigation = () => {
                 header: ({ navigation, route }) => (
                     <Header screen={ route.name } navigation={ navigation } />
                 ),
-                animation: 'fade'
+                animation: 'none'
             }}
         >
             <Stack.Screen name="ProfileScreen" component={ ProfileScreen } />
@@ -41,7 +41,8 @@ export const Navigation = () => {
     )
 
     return (<>
-        {(user?._id)
+        {//(user?._id)
+        (true)
             ? (
                 <Tab.Navigator
                     screenOptions={{

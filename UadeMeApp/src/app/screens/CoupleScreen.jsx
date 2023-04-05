@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { CoupleQuestions } from '../components';
 const { height: screenHeight } = Dimensions.get('screen');
 
 const imagesArray = [
@@ -21,69 +23,76 @@ const imagesArray = [
 export const CoupleScreen = () => {
     const [images, setImages] = useState(imagesArray);
     const [currentImage, setCurrentImage] = useState(0);
+    const { user } = useAuthContext();
 
     return (
         <View style={ styles.container }>
-            <TouchableOpacity
-                activeOpacity={ 1 }
-                onPress={ () => setCurrentImage((prev) => {
-                    if (prev + 1 == images.length) return 0;
-                    return prev + 1;
-                })}
-                style={ styles.card }
-            >
-                <ImageBackground
-                    source={{ uri: images[currentImage].url }}
-                    fadeDuration={ 500 }
-                    style={ styles.cardProfileMainImage }
-                    imageStyle={{ borderRadius: 8 }}
-                >
-                    <View style={ styles.imagesIndicatorContainer}>
-                        <View style={ styles.imagesIndicator }>
-                            {images.map(image => (
-                                <View key={ image.id } style={ [styles.image, (image.id == currentImage) && styles.imageSelected] }></View>
-                            ))}
-                        </View>
-                    </View>
-
-                    <LinearGradient
-                        colors={['transparent','#000']}  
-                        style={ styles.cardControls }
+            {(true)
+                ? <CoupleQuestions />
+                : (
+                    <TouchableOpacity
+                        activeOpacity={ 1 }
+                        onPress={ () => setCurrentImage((prev) => {
+                            if (prev + 1 == images.length) return 0;
+                            return prev + 1;
+                        })}
+                        style={ styles.card }
                     >
-                        <View style={{ gap: 7 }}>
-                            <Text style={ styles.cardName }>Enzo <Text style={ styles.cardAge }>19</Text></Text>
-                            <View style={ styles.cardOnline }>
-                                <View style={ styles.cardOnlineCircle }></View>
-                                <Text style={ styles.cardOnlineText }>Está online</Text>
+                        <ImageBackground
+                            source={{ uri: images[currentImage].url }}
+                            fadeDuration={ 500 }
+                            style={ styles.cardProfileMainImage }
+                            imageStyle={{ borderRadius: 8 }}
+                        >
+                            <View style={ styles.imagesIndicatorContainer}>
+                                <View style={ styles.imagesIndicator }>
+                                    {images.map(image => (
+                                        <View key={ image.id } style={ [styles.image, (image.id == currentImage) && styles.imageSelected] }></View>
+                                    ))}
+                                </View>
                             </View>
-                            <Text style={ styles.cardBiography }>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti omnis amet iusto voluptatibus. Numquam?</Text>
-                        </View>
-
-                        <View style={ styles.cardReactions }>
-                            <TouchableOpacity
-                                style={ styles.noMatch }
-                                activeOpacity={ 0.7 }
+                                    
+                            <LinearGradient
+                                colors={['transparent','#000']}  
+                                style={ styles.cardControls }
                             >
-                                <Icon
-                                    name="close"
-                                    size={ 35 }
-                                    color="#E2583A"
-                                />
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={ styles.match }
-                                activeOpacity={ 0.7 }
-                            >
-                                <Icon
-                                    name="favorite-outline"
-                                    size={ 35 }
-                                    color="#59CC91"
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    </LinearGradient>
-                </ImageBackground>
-            </TouchableOpacity>
+                                <View style={{ gap: 7 }}>
+                                    <Text style={ styles.cardName }>Enzo <Text style={ styles.cardAge }>19</Text></Text>
+                                    <View style={ styles.cardOnline }>
+                                        <View style={ styles.cardOnlineCircle }></View>
+                                        <Text style={ styles.cardOnlineText }>Está online</Text>
+                                    </View>
+                                    <Text style={ styles.cardBiography }>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti omnis amet iusto voluptatibus. Numquam?</Text>
+                                </View>
+                                    
+                                <View style={ styles.cardReactions }>
+                                    <TouchableOpacity
+                                        style={ styles.noMatch }
+                                        activeOpacity={ 0.7 }
+                                    >
+                                        <Icon
+                                            name="close"
+                                            size={ 35 }
+                                            color="#E2583A"
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        style={ styles.match }
+                                        activeOpacity={ 0.7 }
+                                    >
+                                        <Icon
+                                            name="favorite-outline"
+                                            size={ 35 }
+                                            color="#59CC91"
+                                        />
+                                    </TouchableOpacity>
+                                </View>
+                            </LinearGradient>
+                        </ImageBackground>
+                    </TouchableOpacity>
+                )
+            }
+            
         </View>
     )
 }

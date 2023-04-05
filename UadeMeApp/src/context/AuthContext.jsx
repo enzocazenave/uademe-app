@@ -7,7 +7,7 @@ export const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
 
     const [action, setAction] = useState('login');
-    const [isChecking, setIsChecking] = useState(true);
+    const [isChecking, setIsChecking] = useState(false); // esto tiene que ir true
     const [user, setUser] = useState({});
     const [loginError, setLoginError] = useState('');
     const [registerError, setRegisterError] = useState('');
@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        validateToken();
+        //validateToken();
     }, []);
 
     const validateToken = async() => {
