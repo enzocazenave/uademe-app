@@ -23,7 +23,7 @@ export const SettingsScreen = () => {
                     color={ "#f00" }
                 />
                 <Text style={ styles.buttonText }>Cerrar sesión</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> 
         </View>
     )
 }

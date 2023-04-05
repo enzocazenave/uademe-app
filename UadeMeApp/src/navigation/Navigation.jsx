@@ -36,7 +36,7 @@ export const Navigation = () => {
 
     if (isChecking) return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <ActivityIndicator size="large" color="#00f" />
+            <ActivityIndicator size="large" color="#1778AF" />
         </View>
     )
 
