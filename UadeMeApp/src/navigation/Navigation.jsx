@@ -41,8 +41,7 @@ export const Navigation = () => {
     )
 
     return (<>
-        {//(user?._id)
-        (true)
+        {(user?._id)
             ? (
                 <Tab.Navigator
                     screenOptions={{
