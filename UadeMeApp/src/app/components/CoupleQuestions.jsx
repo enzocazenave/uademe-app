@@ -1,38 +1,17 @@
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { career as careers } from "../../data/career";
 import { SuggestedCareer } from "./SuggestedCareer";
-
-const removeAccents = (cadena) => {
-	const acentos = {'á':'a','é':'e','í':'i','ó':'o','ú':'u','Á':'A','É':'E','Í':'I','Ó':'O','Ú':'U'};
-	return cadena.split('').map( letra => acentos[letra] || letra).join('').toString();	
-}
+import SelectList from "./SelectList";
 
 export const CoupleQuestions = () => {
 
     const { user } = useAuthContext();
     
     const [age, setAge] = useState('');
-    const [career, setCareer] = useState('');
-    const [suggestedCareers, setSuggestedCareers] = useState([]);
     const [selectedCareer, setSelectedCareer] = useState({});
 
-    useEffect(() => {
-        if (career.length % 3 == 0 || career.length === 0) return;
-
-        const filteredCareers = careers.filter(careersItem => {
-            const { title } = careersItem;
-            const query = removeAccents(career.toLowerCase().trim());
-            const condition = removeAccents(title.toLowerCase()).startsWith(query);
-            return condition;
-        });
-
-        setSuggestedCareers(filteredCareers);
-    }, [career]);
-
-    console.log('rerendered')
-    
     return (
         <View style={ styles.container }>
             <View>
@@ -54,23 +33,35 @@ export const CoupleQuestions = () => {
 
             <View style={ styles.inputContainer }>
                 <Text style={ styles.inputTitle }>Carrera</Text>
-                <TextInput 
+                {/*<TextInput 
                     style={ styles.input } 
                     value={ career }
                     onChangeText={ setCareer }
                 />
-            </View>
-
-            {
-                (career.length >= 3 && selectedCareer.title !== career && suggestedCareers.length > 0) && (
+                {(career.length >= 3 && selectedCareer.title !== career && suggestedCareers.length > 0) && (
                     <SuggestedCareer 
                         suggestedCareers={ suggestedCareers } 
                         setCareer={ setCareer } 
                         setSelectedCareer={ setSelectedCareer } 
                     />
-                )
-            }
-            
+                )}*/}
+
+                <SelectList
+                    data={ careers }
+                    inputStyles={ styles.dropdownInput }
+                    dropdownStyles={ styles.dropdown }
+                    boxStyles={ styles.dropdownBox }
+                    dropdownItemStyles={ styles.dropdownItem }
+                    searchPlaceholder="Buscá tu carrera"
+                    setSelected={ (id) => {
+                        const value = careers[id]?.value;
+                        if (!value) return;
+                        setSelectedCareer(careers[id]);
+                    }}
+                    notFoundText="No se encontraron resultados"
+                    maxHeight={ 200 }
+                />
+            </View>
 
             <Text style={ styles.textProfile }>Puedes cambiar tus fotos de perfil ingresando a la sección "Perfil", a la cual se puede acceder mediante la última opción del menú inferior.</Text>
 
@@ -89,7 +80,8 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 20,
         backgroundColor: '#1778AF',
-        gap: 15
+        gap: 15,
+        zIndex: 1
     },
     welcomeText: {
         fontSize: 20,
@@ -109,7 +101,8 @@ const styles = StyleSheet.create({
     button: {
         padding: 10,
         backgroundColor: '#f0f0f0',
-        borderRadius: 7
+        borderRadius: 7,
+        zIndex: -1
     },
     buttonText: {
         textAlign: 'center',
@@ -135,6 +128,10 @@ const styles = StyleSheet.create({
     textProfile: {
         color: '#f0f0f0',
         fontWeight: 400,
-        zIndex: 0
+        zIndex: -1
     },
+    dropdownInput: { borderWidth: 0, backgroundColor: '#3789B7', padding: 0, color: '#f0f0f0' },
+    dropdownBox: { borderWidth: 0, backgroundColor: '#3789B7' },
+    dropdown: { backgroundColor: '#e5e5e5', padding: 0 },
+    dropdownItem: { borderBottomColor: '#ddd', borderBottomWidth: 1  }
 });

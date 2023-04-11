@@ -92,7 +92,6 @@ export const CoupleScreen = () => {
                     </TouchableOpacity>
                 )
             }
-            
         </View>
     )
 }
