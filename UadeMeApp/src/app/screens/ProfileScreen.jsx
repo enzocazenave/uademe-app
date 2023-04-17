@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
     View,
     Text,
@@ -10,12 +10,21 @@ import {
 } from 'react-native';
 import { ProfileImage } from '../components';
 import { useAuthContext } from '../../hooks/useAuthContext';
+import { career } from '../../data/career';
+import { getAgeFromDate } from '../../helpers/getAgeFromDate';
 
 const { height: screenHeight } = Dimensions.get('screen');
 
 export const ProfileScreen = () => {
     const [images, setImages] = useState([]);
     const { user } = useAuthContext();
+    const [about, setAbout] = useState('Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti omnis amet iusto voluptatibus. Numquam?');
+    
+    const age = useMemo(() => {
+        const date = user.birthdate;
+        if (date) return getAgeFromDate(user.birthdate);
+        return 0;
+    }, [user]);
 
     useEffect(() => {
         setImages((prev) => {
@@ -33,16 +42,23 @@ export const ProfileScreen = () => {
                 style={ styles.container }
             >
                 <View style={ styles.profile }>
-                    <View>
-                        <Text style={ styles.profileName }>{ user.name } { user.surname }, <Text style={ styles.age }>19</Text></Text>
-                        <Text style={ styles.profileCareer }>Ingenieria en Informática</Text>
+                    <View style={ styles.profileInfoContainer }>
+                        <Text style={ styles.profileName }>{ user.name } { user.surname }{ age ?  (<Text style={ styles.age }>, { age }</Text>) : ''}</Text>
+                        <Text 
+                            style={ styles.profileCareer }
+                            numberOfLines={ 1 }
+                            ellipsizeMode='tail'
+                        >
+                            { career[user.career]?.value }
+                        </Text>
                     </View>
                     <Text style={ styles.aboutTitle }>Sobre mí</Text>
                     <TextInput
                         multiline={ true }
                         numberOfLines={ 4 }
                         style={ styles.aboutInput }
-                        value='Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti omnis amet iusto voluptatibus. Numquam?'
+                        onChangeText={ (text) => setAbout(text) }
+                        value={ about }
                     />
                 </View>
 
@@ -75,15 +91,18 @@ const styles = StyleSheet.create({
     },
     profile: {
         paddingHorizontal: 15,
-        gap: 10
+        gap: 10,
     },  
+    profileInfoContainer: {
+        gap: 2
+    },
     profileName: {
         fontSize: 25,
     },
     profileCareer: {
         fontSize: 15,
         color: '#444',
-        fontWeight: 300
+        fontWeight: 300,
     },
     age: {
         fontWeight: 300

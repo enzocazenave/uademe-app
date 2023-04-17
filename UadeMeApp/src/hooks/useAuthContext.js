@@ -88,6 +88,7 @@ export const useAuthContext = () => {
         registerError,
         setRegisterError,
         otpError,
-        user
+        user,
+        setUser
     }
 }

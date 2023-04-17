@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 import backend from '../api/backend';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {

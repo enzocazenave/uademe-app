@@ -44,11 +44,11 @@ export const Header = ({ screen, navigation }) => {
             
             { (screen == 'ProfileScreen') &&
                 <TouchableOpacity
+                    style={ stylesProfile.settings }
                     activeOpacity={ 0.7 }
                     onPress={ () => navigation.navigate('ProfileStack', { screen: 'SettingsScreen' }) } 
                 >
                     <Icon
-                        style={ stylesProfile.settings }
                         name="settings-outline"
                         size={ 25 }
                     />
@@ -90,12 +90,17 @@ const stylesCouple = StyleSheet.create({
 const stylesProfile = StyleSheet.create({
     container: {
         alignItems: 'center',
-        justifyContent: 'space-between',
         paddingBottom: 10,
-        paddingHorizontal: 15,
+        paddingHorizontal: 10,
         flexDirection: 'row',
     },
+    settings: {
+        position: 'absolute',
+        right: 10,
+        top: 54,
+    },
     titleContainer: {
+        flex: 1,
         gap: 5,
         justifyContent: 'center',
         alignItems: 'center',

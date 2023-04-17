@@ -23,6 +23,7 @@ const SelectList =  ({
     disabledItemStyles,
     disabledTextStyles,
     onSelect = () => {},
+    onDropdownOpen = () => {},
     save = 'key',
     dropdownShown = false,
     fontFamily
@@ -42,6 +43,7 @@ const SelectList =  ({
             duration:500,
             useNativeDriver:false,
         }).start();
+        onDropdownOpen()
     }
 
     const slideup = () => {
@@ -49,7 +51,10 @@ const SelectList =  ({
             toValue:0,
             duration:500,
             useNativeDriver:false,
-        }).start(() => setDropdown(false));
+        }).start(() => {
+            setDropdown(false)
+            onDropdownOpen();
+        });
     }
 
     React.useEffect( () => {
@@ -114,9 +119,8 @@ const SelectList =  ({
                                 placeholder={searchPlaceholder}
                                 onChangeText={(val) => {
                                     let result =  data.filter((item) => {
-                                        val.toLowerCase();
-                                        let row = removeAccents(item.value.toLowerCase());
-                                        return row.search(val.toLowerCase()) >= 0;
+                                        let row = item.filterValue
+                                        return row.search(removeAccents(val.toLowerCase())) >= 0;
                                     });
                                     setFilteredData(result)
                                 }}
@@ -161,7 +165,7 @@ const SelectList =  ({
             {
                 (dropdown)
                 ?
-                    <Animated.View style={[{maxHeight:animatedvalue},styles.dropdown,dropdownStyles]}>
+                    <Animated.View style={[{maxHeight:animatedvalue },styles.dropdown,dropdownStyles]}>
                         <ScrollView contentContainerStyle={{paddingVertical:10,overflow:'hidden'}} nestedScrollEnabled={true}>
                             {
                                 (filtereddata.length >=  1)

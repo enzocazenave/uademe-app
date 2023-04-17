@@ -1,16 +1,51 @@
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { career as careers } from "../../data/career";
-import { SuggestedCareer } from "./SuggestedCareer";
 import SelectList from "./SelectList";
+import DatePicker from "react-native-date-picker";
+import backend from "../../api/backend";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const genders = [
+    { key: 0, value: 'Masculino' },
+    { key: 1, value: 'Femenino' },
+    { key: 2, value: 'Otros' }
+]
 
 export const CoupleQuestions = () => {
 
-    const { user } = useAuthContext();
+    const { user, setUser } = useAuthContext();
     
-    const [age, setAge] = useState('');
     const [selectedCareer, setSelectedCareer] = useState({});
+    const [selectedGender, setSelectedGender] = useState({});
+    const [dropdown, setDropdown] = useState(false);
+    const [modalDatePicker, setModalDatePicker] = useState(false);
+    const [birthdate, setBirthdate] = useState(new Date());
+    const [birthdateWasChange, setBirthdateWasChange] = useState(false);
+        
+    const processBirthdate = useMemo(() => {
+        const day = birthdate.getDate();
+        const month = birthdate.getMonth();
+        const year = birthdate.getFullYear();
+
+        return birthdateWasChange
+            ? `${day}/${month}/${year}`
+            : 'Selecciona una fecha'
+    }, [birthdateWasChange]);
+
+    const submitQuestions = async() => {
+        const { data } = await backend.post(`/user/answer/${ user._id }`, {
+            birthdate,
+            career: selectedCareer.key,
+            gender: selectedGender.key
+        });
+
+        await AsyncStorage.setItem('@uademe:token', data.session.token);
+        delete data.session.token;
+
+        setUser(data.session);
+    }
 
     return (
         <View style={ styles.container }>
@@ -21,30 +56,45 @@ export const CoupleQuestions = () => {
             
             <Text style={ styles.title }>Necesitamos que completes algunos datos.</Text>
             
-            <View style={ styles.inputContainer }>
-                <Text style={ styles.inputTitle }>Edad</Text>
-                <TextInput 
-                    style={ styles.input } 
-                    keyboardType="number-pad" 
-                    value={ age }
-                    onChangeText={ setAge }
-                />
+            <View style={ styles.inputGroup }>
+                {(!dropdown) && (
+                    <View style={ [styles.inputContainer, { flex: 3 }] }>
+                        <Text style={ styles.inputTitle }>Fecha de nacimiento</Text>
+                        <TextInput 
+                            style={ styles.input } 
+                            value={ processBirthdate }
+                            placeholder="DD/MM/YYYY"
+                            onFocus={ () => setModalDatePicker(true) }
+                        />
+                    </View>
+                )}
+                
+                <View style={ [styles.inputContainer, { flex: 2 }] }>
+                    <Text style={ styles.inputTitle }>Géneros</Text>
+                    <SelectList
+                        data={ genders }
+                        inputStyles={ styles.dropdownInput }
+                        dropdownStyles={ styles.dropdown }
+                        boxStyles={ styles.dropdownBox }
+                        dropdownItemStyles={ styles.dropdownItem }
+                        searchPlaceholder="Buscá tu carrera"
+                        placeholder="Genero"
+                        setSelected={ (id) => {
+                            const value = genders[id]?.value;
+                            if (!value) return;
+                            setSelectedGender(genders[id]);
+                        }}
+                        search={ false }
+                        onDropdownOpen={ () => {
+                            setDropdown(!dropdown);
+                        }}
+                    />
+                </View>
             </View>
+                
 
             <View style={ styles.inputContainer }>
                 <Text style={ styles.inputTitle }>Carrera</Text>
-                {/*<TextInput 
-                    style={ styles.input } 
-                    value={ career }
-                    onChangeText={ setCareer }
-                />
-                {(career.length >= 3 && selectedCareer.title !== career && suggestedCareers.length > 0) && (
-                    <SuggestedCareer 
-                        suggestedCareers={ suggestedCareers } 
-                        setCareer={ setCareer } 
-                        setSelectedCareer={ setSelectedCareer } 
-                    />
-                )}*/}
 
                 <SelectList
                     data={ careers }
@@ -53,6 +103,7 @@ export const CoupleQuestions = () => {
                     boxStyles={ styles.dropdownBox }
                     dropdownItemStyles={ styles.dropdownItem }
                     searchPlaceholder="Buscá tu carrera"
+                    placeholder="Seleccioná tu carrera"
                     setSelected={ (id) => {
                         const value = careers[id]?.value;
                         if (!value) return;
@@ -65,9 +116,30 @@ export const CoupleQuestions = () => {
 
             <Text style={ styles.textProfile }>Puedes cambiar tus fotos de perfil ingresando a la sección "Perfil", a la cual se puede acceder mediante la última opción del menú inferior.</Text>
 
+            <DatePicker
+                modal
+                open={ modalDatePicker }
+                date={birthdate}
+                onConfirm={(date) => {
+                  setModalDatePicker(false)
+                  setBirthdate(date);
+                  setBirthdateWasChange(true);
+                }}
+                onCancel={() => {
+                    setModalDatePicker(false)
+                }}
+                mode="date"
+                maximumDate={ new Date() }
+                confirmText="Confirmar"
+                cancelText="Cancelar"
+                title="Selecciona tu fecha de nacimiento"
+                locale="es"
+            />
+            
             <TouchableOpacity
                 activeOpacity={ 0.7 }
                 style={ styles.button }
+                onPress={ submitQuestions }
             >
                 <Text style={ styles.buttonText }>Guardar</Text>
             </TouchableOpacity>
@@ -112,8 +184,12 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         flexDirection: 'column',
-        gap: 5
+        gap: 5,
     },  
+    inputGroup: {
+        flexDirection: 'row',
+        gap: 15,
+    },
     inputTitle: {
         color: '#f0f0f0',
         fontSize: 16,
@@ -123,7 +199,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#3789B7',
         padding: 10,
         borderRadius: 7,
-        color: '#f0f0f0'
+        color: '#f0f0f0',
+        paddingHorizontal: 20,
+        paddingVertical: 13,
+        borderRadius: 10,
     },
     textProfile: {
         color: '#f0f0f0',
