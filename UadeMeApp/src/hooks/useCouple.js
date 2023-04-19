@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import backend from "../api/backend";
 
 export const useCouple = () => {
-
     const [users, setUsers] = useState([]);
-    const [currentUser, setCurrentUser] = useState(0);
     const [limit, setLimit] = useState(10);
-    const missingUsers = users.length - currentUser;
+    const [lastUser, setLastUser] = useState({});
     const gender = 0;
 
     useEffect(() => {
@@ -20,33 +18,15 @@ export const useCouple = () => {
     }
 
     const handleNextUser = () => {
-        setCurrentUser((previousUser) => previousUser + 1);
-        if (currentUser == limit - 2) setLimit((previousLimit) => previousLimit + 10);
-    }
+        setUsers((prevUsers) => {
+            const slicedArray = prevUsers.slice(1);
 
-    const handleNextImage = () => {
-        setUsers((previousUsers) => (
-            previousUsers.map((user, index) => {
-                if (index === currentUser) {
-                    if (user.currentImage == user.profileImages.length) return { 
-                        ...user,
-                        ['currentImage']: 0
-                    }
+            if (slicedArray.length == 0) {
+                setLastUser(prevUsers[0]);
+            }
 
-                    if (user.currentImage + 1 == user.profileImages.length) return { 
-                        ...user,
-                        ['currentImage']: 0
-                    }
-                    
-                    return { 
-                        ...user,
-                        ['currentImage']: user.currentImage + 1
-                    }              
-                }
-
-                return user;
-            })
-        ));
+            return slicedArray;
+        });
     }
 
     const match = async() => {
@@ -59,12 +39,9 @@ export const useCouple = () => {
 
     return {
         users,
-        currentUserIndex: currentUser,
-        currentUser: users[currentUser],
         handleNextUser,
-        handleNextImage,
         match,
         noMatch,
-        missingUsers
+        lastUser
     }
 }

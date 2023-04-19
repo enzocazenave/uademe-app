@@ -9,21 +9,39 @@ import { useCouple } from '../../hooks/useCouple';
 
 export const CoupleScreen = () => {
     const { user } = useAuthContext();
-    const { handleNextImage, handleNextUser, currentUser, missingUsers } = useCouple();
+    const { handleNextUser, users, lastUser } = useCouple();
 
     return (
         <View style={ styles.container }>
             {(user.career < 0)
                 ? <CoupleQuestions />
-                : (missingUsers == 0)
-                    ? <Text>No hay mas usuarios registrados</Text>
-                    : (
-                        <CoupleCard 
-                            handleNextImage={ handleNextImage }
-                            handleNextUser={ handleNextUser }
-                            currentUser={ currentUser } 
-                        />
-                    )
+                : (
+                    <View>
+                        { lastUser.name
+                            ? (
+                                <CoupleCard
+                                    user={ lastUser }
+                                    isFirst={ false }
+                                    handleNextUser={ () => {} }
+                                    lastUser
+                                />
+                            ) 
+                            : (
+                                users.map((user, index) => {
+                                    const isFirst = index === 0
+        
+                                    return (<CoupleCard
+                                        key={ user._id }
+                                        isFirst={ isFirst }
+                                        handleNextUser={ handleNextUser }
+                                        user={ user }
+                                    />)
+                                }).reverse()
+                            )
+                        }
+                        {}
+                    </View>
+                )
             }
         </View>
     )
@@ -32,5 +50,11 @@ export const CoupleScreen = () => {
 const styles = StyleSheet.create({
     container: {
         padding: 10,
+    },
+    textContainer: {
+        gap: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '90%',
     },
 })

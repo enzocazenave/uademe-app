@@ -1,77 +1,133 @@
-import { Dimensions, ImageBackground, StyleSheet, TouchableOpacity, View, Text } from "react-native";
-import { useCouple } from "../../hooks/useCouple";
+import { Dimensions, ImageBackground, StyleSheet, TouchableOpacity, View, Text, Animated } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getAgeFromDate } from '../../helpers/getAgeFromDate';
-const { height: screenHeight } = Dimensions.get('screen');
+import { useEffect, useRef, useState } from "react";
+import { useFade } from '../../hooks/useFade';
+const { height: screenHeight, width: screenWidth } = Dimensions.get('screen');
 
-export const CoupleCard = ({ handleNextImage, handleNextUser, currentUser }) => {
+
+const OUT_OF_SCREEN = screenWidth + 0.5 * screenWidth
+
+export const CoupleCard = ({ handleNextUser, user, isFirst, lastUser = false }) => {
+
+    const [currentImage, setCurrentImage] = useState(0);
+    const swipe = useRef(new Animated.ValueXY()).current;
+
+    const handleNextImage = () => {
+        if (lastUser) return;
+
+        setCurrentImage((prevCurrentImage) => {
+            if (prevCurrentImage + 1 == user.profileImages.length) return 0;
+            return prevCurrentImage + 1; 
+        });
+    }
+
+    const handleMatch = () => {
+        Animated.timing(swipe.x, {
+            duration: 500,
+            toValue: OUT_OF_SCREEN,
+            useNativeDriver: true
+        }).start(handleNextUser);
+    }
+
+    const handleNoMatch = () => {
+        Animated.timing(swipe.x, {
+            duration: 500,
+            toValue: - OUT_OF_SCREEN,
+            useNativeDriver: true
+        }).start(handleNextUser);
+    }
+
+    const rotate = Animated.multiply(swipe.x, 1).interpolate({
+        inputRange: [-100, 0, 100],
+        outputRange: ['8deg', '0deg', '-8deg']
+    })
+
     return (
         <TouchableOpacity
             activeOpacity={ 1 }
             onPress={ handleNextImage }
-            style={ styles.card }
+            style={ [styles.card, isFirst && { transform: [...swipe.getTranslateTransform(), { rotate: rotate }] }] }
         >
             <ImageBackground
-                source={{ uri: currentUser?.profileImages[currentUser.currentImage].url }}
+                source={{ uri: user.profileImages[currentImage].url }}
                 fadeDuration={ 500 }
-                style={ styles.cardProfileMainImage }
+                style={ [styles.cardProfileMainImage, { justifyContent: 'center' }] }
                 imageStyle={{ borderRadius: 8 }}
-            >
-                <View style={ styles.imagesIndicatorContainer}>
-                    <View style={ styles.imagesIndicator }>
-                        {currentUser?.profileImages.map(image => (
-                            <View key={ image.id } style={ [styles.image, (image.id == currentUser?.profileImages[currentUser.currentImage].id) && styles.imageSelected] }></View>
-                        ))}
-                    </View>
-                </View>
-                        
-                <LinearGradient
-                    colors={['transparent','#000']}  
-                    style={ styles.cardControls }
-                >
-                    <View style={{ gap: 7 }}>
-                        <Text style={ styles.cardName }>{ currentUser?.name } <Text style={ styles.cardAge }>{ getAgeFromDate(currentUser?.birthdate) }</Text></Text>
-                        <View style={ styles.cardOnline }>
-                            { currentUser?.isOnline
-                                ? <View style={ styles.cardOnlineCircle }></View>
-                                : <View style={ styles.cardOfflineCircle }></View>
-                            }
-                            <Text style={ styles.cardOnlineText }>
-                                { currentUser?.isOnline
-                                    ? 'Está online'
-                                    : 'No está online'
-                                }
-                            </Text>
+                blurRadius={ lastUser ? 35 : 0 }
+            >   
+                {(user.profileImages.length > 1) && (
+                    <>{ !lastUser && (
+                        <View style={ styles.imagesIndicatorContainer}>
+                            <View style={ styles.imagesIndicator }>
+                                {user.profileImages.map(image => (
+                                    <View key={ image.id } style={ [styles.image, (image.id == user.profileImages[currentImage].id) && styles.imageSelected] }></View>
+                                ))}
+                            </View>
                         </View>
-                        <Text style={ styles.cardBiography }>{ currentUser?.about }</Text>
-                    </View>
-                            
-                    <View style={ styles.cardReactions }>
-                        <TouchableOpacity
-                            style={ styles.noMatch }
-                            activeOpacity={ 0.7 }
-                            onPress={ handleNextUser }
-                        >
-                            <Icon
-                                name="close"
-                                size={ 35 }
-                                color="#E2583A"
-                            />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={ styles.match }
-                            activeOpacity={ 0.7 }
-                            onPress={ handleNextUser }
-                        >
-                            <Icon
-                                name="favorite-outline"
-                                size={ 35 }
-                                color="#59CC91"
-                            />
-                        </TouchableOpacity>
-                    </View>
-                </LinearGradient>
+                    )}</>
+                )}
+
+                { lastUser && (
+                    <View style={ styles.textContainer }>
+                    <Text style={ styles.text }>NO HAY MAS USUARIOS</Text>
+                    <Text style={ styles.paragraph }>
+                        No hay mas usuarios registrados para mostrarte. Te recomendamos volver a revisar tus
+                        <Text style={{ fontWeight: 800 }}> No Matcheados</Text> para ver si cámbias de opinión.
+                    </Text>
+                </View>
+                ) }
+
+                { !lastUser &&
+                    <LinearGradient
+                        colors={ ['transparent','#000'] }  
+                        style={ styles.cardControls }
+                    >
+                        <View style={{ gap: 7 }}>
+                            <Text style={ styles.cardName }>{ user?.name } <Text style={ styles.cardAge }>{ getAgeFromDate(user?.birthdate) }</Text></Text>
+                            <View style={ styles.cardOnline }>
+                                { user?.isOnline
+                                    ? <View style={ styles.cardOnlineCircle }></View>
+                                    : <View style={ styles.cardOfflineCircle }></View>
+                                }
+                                <Text style={ styles.cardOnlineText }>
+                                    { user?.isOnline
+                                        ? 'Está online'
+                                        : 'No está online'
+                                    }
+                                </Text>
+                            </View>
+                            <Text style={ styles.cardBiography }>{ user?.about }</Text>
+                        </View>
+                                
+                        <Animated.View style={ styles.cardReactions }>
+                            <TouchableOpacity
+                                style={ styles.noMatch }
+                                activeOpacity={ 0.7 }
+                                onPress={ handleNoMatch }
+                            >
+                                <Icon
+                                    name="close"
+                                    size={ 35 }
+                                    color="#E2583A"
+                                />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={ styles.match }
+                                activeOpacity={ 0.7 }
+                                onPress={ handleMatch }
+                            >
+                                <Icon
+                                    name="favorite-outline"
+                                    size={ 35 }
+                                    color="#59CC91"
+                                />
+                            </TouchableOpacity>
+                        </Animated.View>
+                        
+                    </LinearGradient>
+                }
             </ImageBackground>
         </TouchableOpacity>
     )
@@ -79,7 +135,9 @@ export const CoupleCard = ({ handleNextImage, handleNextUser, currentUser }) => 
 
 const styles = StyleSheet.create({
     card: {
+        position: 'absolute',
         height: screenHeight * 0.75,
+        width: '100%'
     },
     cardProfileMainImage: {
         width: '100%',
@@ -169,5 +227,21 @@ const styles = StyleSheet.create({
     },
     imageSelected: {
         backgroundColor: '#f0f0f0'
+    },
+    textContainer: {
+        gap: 10,
+        padding: 5
+    },
+    text: {
+        textAlign: 'center',
+        fontSize: 20,
+        color: '#fff',
+        fontWeight: 700
+    },
+    paragraph: {
+        textAlign: 'center',
+        fontSize: 17,
+        color: '#f0f0f0',
+        fontWeight: 500
     }
 })
