@@ -5,18 +5,18 @@ import {
 } from 'react-native';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { CoupleCard, CoupleQuestions } from '../components';
-import { useCouple } from '../../hooks/useCouple';
+import { useCoupleScreen } from '../../hooks/useCoupleScreen';
 
 export const CoupleScreen = () => {
     const { user } = useAuthContext();
-    const { handleNextUser, users, lastUser } = useCouple();
+    const { handleNextUser, users, lastUser, match, noMatch } = useCoupleScreen();
 
     return (
         <View style={ styles.container }>
             {(user.career < 0)
                 ? <CoupleQuestions />
                 : (
-                    <View>
+                    <View style={ (users.length == 0 && !lastUser.name) && { height: '90%', justifyContent: 'center' } }>
                         { lastUser.name
                             ? (
                                 <CoupleCard
@@ -35,11 +35,21 @@ export const CoupleScreen = () => {
                                         isFirst={ isFirst }
                                         handleNextUser={ handleNextUser }
                                         user={ user }
+                                        match={ match }
+                                        noMatch={ noMatch }
                                     />)
                                 }).reverse()
                             )
                         }
-                        {}
+                        {(users.length == 0 && !lastUser.name) && (
+                            <View style={ styles.textContainer }>
+                                <Text style={ styles.text }>NO HAY MAS USUARIOS</Text>
+                                <Text style={ styles.paragraph }>
+                                    No hay mas usuarios registrados para mostrarte. Te recomendamos volver a revisar tus
+                                    <Text style={{ fontWeight: 800 }}> No Matcheados</Text> para ver si cámbias de opinión.
+                                </Text>
+                            </View>
+                        )}
                     </View>
                 )
             }
@@ -57,4 +67,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         height: '90%',
     },
+    textContainer: {
+        gap: 10,
+        padding: 5
+    },
+    text: {
+        textAlign: 'center',
+        fontSize: 20,
+        fontWeight: 700
+    },
+    paragraph: {
+        textAlign: 'center',
+        fontSize: 17,
+        fontWeight: 500
+    }
 })

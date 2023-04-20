@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from "react"
 import backend from "../api/backend";
+import { useAuthContext } from "./useAuthContext";
 
-export const useCouple = () => {
+export const useCoupleScreen = () => {
+    const { user } = useAuthContext();
     const [users, setUsers] = useState([]);
     const [limit, setLimit] = useState(10);
     const [lastUser, setLastUser] = useState({});
@@ -12,7 +14,7 @@ export const useCouple = () => {
     }, [limit]);
 
     const getUsers = async() => {
-        const { data } = await backend.get(`/couple/users/${ gender }?limit=${ limit }`);
+        const { data } = await backend.get(`/couple/users/${ user._id }?limit=${ limit }`);
         if (data.users.length == 0) return;
         setUsers((previousUsers) => [...previousUsers, ...data.users]);
     }
@@ -29,12 +31,12 @@ export const useCouple = () => {
         });
     }
 
-    const match = async() => {
-
+    const match = async(userId) => {
+        await backend.post(`/couple/match/${ userId }`, { userId: user._id });
     }
 
-    const noMatch = async() => {
-
+    const noMatch = async(userId) => {
+        await backend.post(`/couple/nomatch/${ userId }`, { userId: user._id });
     }
 
     return {

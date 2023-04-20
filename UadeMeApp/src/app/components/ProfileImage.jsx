@@ -10,7 +10,7 @@ const imagePickerConfig = {
     },
 };
 
-export const ProfileImage = ({ image }) => {
+export const ProfileImage = ({ image, uploadImageToCloudinary }) => {
 
     const [uploadedImage, setUploadedImage] = useState();
 
@@ -21,6 +21,7 @@ export const ProfileImage = ({ image }) => {
             if (width == 0 || height == 0 || fileSize == 0) return;
 
             setUploadedImage(uri);
+            uploadImageToCloudinary(response.assets[0]);
         });
     }
 

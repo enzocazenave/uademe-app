@@ -1,4 +1,3 @@
-import { useEffect, useMemo, useState } from 'react';
 import {
     View,
     Text,
@@ -9,32 +8,13 @@ import {
     Keyboard,
 } from 'react-native';
 import { ProfileImage } from '../components';
-import { useAuthContext } from '../../hooks/useAuthContext';
 import { career } from '../../data/career';
-import { getAgeFromDate } from '../../helpers/getAgeFromDate';
+import { useProfileScreen } from '../../hooks/useProfileScreen';
 
 const { height: screenHeight } = Dimensions.get('screen');
 
 export const ProfileScreen = () => {
-    const [images, setImages] = useState([]);
-    const { user } = useAuthContext();
-    const [about, setAbout] = useState('Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti omnis amet iusto voluptatibus. Numquam?');
-    
-    const age = useMemo(() => {
-        const date = user.birthdate;
-        if (date) return getAgeFromDate(user.birthdate);
-        return 0;
-    }, [user]);
-
-    useEffect(() => {
-        setImages((prev) => {
-            return [
-                'https://cdn.discordapp.com/attachments/1008885821027405958/1091610974768865401/Captura_de_pantalla_2023-04-01_a_las_03.32.06.png',
-                'https://cdn.discordapp.com/attachments/1008885821027405958/1091820734654992404/Captura_de_pantalla_2023-04-01_a_las_17.25.37.png',
-                'https://cdn.discordapp.com/attachments/1008885821027405958/1091820903878381578/Captura_de_pantalla_2023-04-01_a_las_17.26.09.png'
-            ]
-        });
-    }, []);
+    const { user, age, about, images, setAbout, uploadImageToCloudinary } = useProfileScreen();
 
     return (
         <TouchableWithoutFeedback onPress={ Keyboard.dismiss } accessible={ false }>
@@ -64,19 +44,19 @@ export const ProfileScreen = () => {
 
                 <View style={ styles.boxes }>
                     <View style={ styles.row }>
-                        <ProfileImage image={ images[0] } />
-                        <ProfileImage image={ images[1] } />
-                        <ProfileImage image={ images[2] } />
+                        <ProfileImage image={ images[0]?.url } uploadImageToCloudinary={ uploadImageToCloudinary } />
+                        <ProfileImage image={ images[1]?.url } uploadImageToCloudinary={ uploadImageToCloudinary } />
+                        <ProfileImage image={ images[2]?.url } uploadImageToCloudinary={ uploadImageToCloudinary } />
                     </View>
                     <View style={ styles.row }>
-                        <ProfileImage image={ images[3] } />
-                        <ProfileImage image={ images[4] } />
-                        <ProfileImage image={ images[5] } />
+                        <ProfileImage image={ images[3]?.url } uploadImageToCloudinary={ uploadImageToCloudinary } />
+                        <ProfileImage image={ images[4]?.url } uploadImageToCloudinary={ uploadImageToCloudinary } />
+                        <ProfileImage image={ images[5]?.url } uploadImageToCloudinary={ uploadImageToCloudinary } />
                     </View>
                     <View style={ styles.row }>
-                        <ProfileImage image={ images[6] } />
-                        <ProfileImage image={ images[7] } />
-                        <ProfileImage image={ images[8] } />
+                        <ProfileImage image={ images[6]?.url } uploadImageToCloudinary={ uploadImageToCloudinary } />
+                        <ProfileImage image={ images[7]?.url } uploadImageToCloudinary={ uploadImageToCloudinary } />
+                        <ProfileImage image={ images[8]?.url } uploadImageToCloudinary={ uploadImageToCloudinary } />
                     </View>
                 </View>
             </View>

@@ -2,14 +2,12 @@ import { Dimensions, ImageBackground, StyleSheet, TouchableOpacity, View, Text, 
 import LinearGradient from "react-native-linear-gradient";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getAgeFromDate } from '../../helpers/getAgeFromDate';
-import { useEffect, useRef, useState } from "react";
-import { useFade } from '../../hooks/useFade';
+import { useRef, useState } from "react";
 const { height: screenHeight, width: screenWidth } = Dimensions.get('screen');
-
 
 const OUT_OF_SCREEN = screenWidth + 0.5 * screenWidth
 
-export const CoupleCard = ({ handleNextUser, user, isFirst, lastUser = false }) => {
+export const CoupleCard = ({ handleNextUser, user, isFirst, lastUser = false, noMatch, match }) => {
 
     const [currentImage, setCurrentImage] = useState(0);
     const swipe = useRef(new Animated.ValueXY()).current;
@@ -29,6 +27,7 @@ export const CoupleCard = ({ handleNextUser, user, isFirst, lastUser = false }) 
             toValue: OUT_OF_SCREEN,
             useNativeDriver: true
         }).start(handleNextUser);
+        match(user._id);
     }
 
     const handleNoMatch = () => {
@@ -37,6 +36,7 @@ export const CoupleCard = ({ handleNextUser, user, isFirst, lastUser = false }) 
             toValue: - OUT_OF_SCREEN,
             useNativeDriver: true
         }).start(handleNextUser);
+        noMatch(user._id);
     }
 
     const rotate = Animated.multiply(swipe.x, 1).interpolate({
@@ -71,12 +71,12 @@ export const CoupleCard = ({ handleNextUser, user, isFirst, lastUser = false }) 
 
                 { lastUser && (
                     <View style={ styles.textContainer }>
-                    <Text style={ styles.text }>NO HAY MAS USUARIOS</Text>
-                    <Text style={ styles.paragraph }>
-                        No hay mas usuarios registrados para mostrarte. Te recomendamos volver a revisar tus
-                        <Text style={{ fontWeight: 800 }}> No Matcheados</Text> para ver si cámbias de opinión.
-                    </Text>
-                </View>
+                        <Text style={ styles.text }>NO HAY MAS USUARIOS</Text>
+                        <Text style={ styles.paragraph }>
+                            No hay mas usuarios registrados para mostrarte. Te recomendamos volver a revisar tus
+                            <Text style={{ fontWeight: 800 }}> No Matcheados</Text> para ver si cámbias de opinión.
+                        </Text>
+                    </View>
                 ) }
 
                 { !lastUser &&
