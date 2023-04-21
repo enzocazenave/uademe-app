@@ -14,7 +14,7 @@ import { useProfileScreen } from '../../hooks/useProfileScreen';
 const { height: screenHeight } = Dimensions.get('screen');
 
 export const ProfileScreen = () => {
-    const { user, age, about, images, setAbout, uploadImageToCloudinary } = useProfileScreen();
+    const { user, age, about, images, setAbout } = useProfileScreen();
 
     return (
         <TouchableWithoutFeedback onPress={ Keyboard.dismiss } accessible={ false }>
@@ -44,19 +44,19 @@ export const ProfileScreen = () => {
 
                 <View style={ styles.boxes }>
                     <View style={ styles.row }>
-                        <ProfileImage image={ images[0]?.url } uploadImageToCloudinary={ uploadImageToCloudinary } />
-                        <ProfileImage image={ images[1]?.url } uploadImageToCloudinary={ uploadImageToCloudinary } />
-                        <ProfileImage image={ images[2]?.url } uploadImageToCloudinary={ uploadImageToCloudinary } />
+                        <ProfileImage image={ images[0]?.url } />
+                        <ProfileImage image={ images[1]?.url } />
+                        <ProfileImage image={ images[2]?.url } />
                     </View>
                     <View style={ styles.row }>
-                        <ProfileImage image={ images[3]?.url } uploadImageToCloudinary={ uploadImageToCloudinary } />
-                        <ProfileImage image={ images[4]?.url } uploadImageToCloudinary={ uploadImageToCloudinary } />
-                        <ProfileImage image={ images[5]?.url } uploadImageToCloudinary={ uploadImageToCloudinary } />
+                        <ProfileImage image={ images[3]?.url } />
+                        <ProfileImage image={ images[4]?.url } />
+                        <ProfileImage image={ images[5]?.url } />
                     </View>
                     <View style={ styles.row }>
-                        <ProfileImage image={ images[6]?.url } uploadImageToCloudinary={ uploadImageToCloudinary } />
-                        <ProfileImage image={ images[7]?.url } uploadImageToCloudinary={ uploadImageToCloudinary } />
-                        <ProfileImage image={ images[8]?.url } uploadImageToCloudinary={ uploadImageToCloudinary } />
+                        <ProfileImage image={ images[6]?.url } />
+                        <ProfileImage image={ images[7]?.url } />
+                        <ProfileImage image={ images[8]?.url } />
                     </View>
                 </View>
             </View>

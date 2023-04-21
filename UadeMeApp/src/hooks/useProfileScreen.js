@@ -24,25 +24,6 @@ export const useProfileScreen = () => {
         setFullUser(data.user);
         setImages(data.user.profile_images);
     }
-
-    const uploadImageToCloudinary = async(image) => {
-        const { type, fileName, uri } = image;
-        const formData = new FormData();
-
-        formData.append('image', {
-            name: fileName,
-            type,
-            uri
-        });
-        
-        const headers = { Accept: 'application/json', 'Content-Type': 'multipart/form-data' }
-
-        const { data } = await backend.post(
-            `/user/image/${ user._id }`, 
-            formData, 
-            { headers }
-        );
-    }
     
     return {
         //* PROPERTIES *//
@@ -52,7 +33,6 @@ export const useProfileScreen = () => {
         images,
     
         //* METHODS *//
-        setAbout,
-        uploadImageToCloudinary
+        setAbout
     }
 }

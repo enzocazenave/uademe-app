@@ -2,6 +2,8 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { useState } from 'react';
+import backend from '../../api/backend';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 const imagePickerConfig = {
     storageOptions: {
@@ -10,17 +12,53 @@ const imagePickerConfig = {
     },
 };
 
-export const ProfileImage = ({ image, uploadImageToCloudinary }) => {
+export const ProfileImage = ({ image }) => {
 
     const [uploadedImage, setUploadedImage] = useState();
+    const [progress, setProgress] = useState(0);
+    const { user } = useAuthContext();
+
+    const uploadImageToCloudinary = async(image) => {
+        const { type, fileName, uri } = image;
+        const formData = new FormData();
+
+        formData.append('image', {
+            name: fileName,
+            type,
+            uri
+        });
+        
+        const headers = { Accept: 'application/json', 'Content-Type': 'multipart/form-data' }
+
+        const { data } = await backend.post(
+            `/user/image/${ user._id }`, 
+            formData, 
+            { 
+                headers,
+                onUploadProgress: (progressEvent) => {
+                    const { loaded, total } = progressEvent;
+                    let percent = Math.floor((loaded * 100) / total);
+
+                    if (percent < 100) {
+                        setProgress(percent);
+                    }
+                }
+            }
+        );
+
+        if (data.image) {
+            setProgress(100);
+            setUploadedImage(image.uri);
+            setProgress(0);
+        }
+    }
 
     const uploadImage = () => {
         launchImageLibrary(imagePickerConfig, (response) => {
             if (response.didCancel) return;
-            const { uri, width, height, fileSize } = response.assets[0];
+            const { width, height, fileSize } = response.assets[0];
             if (width == 0 || height == 0 || fileSize == 0) return;
 
-            setUploadedImage(uri);
             uploadImageToCloudinary(response.assets[0]);
         });
     }
@@ -56,13 +94,21 @@ export const ProfileImage = ({ image, uploadImageToCloudinary }) => {
                     </TouchableOpacity>
                 )
             }
-            {image && (
+            {progress !== 0 && (
+                <Text style={{
+                    textAlign: 'center',
+                    padding: 10
+                }}>
+                    { progress } %
+                </Text>
+            )}
+            {progress == 0 && image && (
                 <Image
                     source={{ uri: image }}
                     style={ styles.image }
                 />
             )}
-            {uploadedImage && (
+            {progress == 0 && uploadedImage && (
                 <Image
                     source={{ uri: uploadedImage }}
                     style={ styles.image }
