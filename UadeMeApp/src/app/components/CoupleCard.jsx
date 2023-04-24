@@ -17,7 +17,7 @@ export const CoupleCard = ({ handleNextUser, user, isFirst, lastUser = false, no
 
         setCurrentImage((prevCurrentImage) => {
             if (prevCurrentImage + 1 == user.profileImages.length) return 0;
-            return prevCurrentImage + 1; 
+            return prevCurrentImage + 1;
         });
     }
 
@@ -46,86 +46,86 @@ export const CoupleCard = ({ handleNextUser, user, isFirst, lastUser = false, no
 
     return (
         <TouchableOpacity
-            activeOpacity={ 1 }
-            onPress={ handleNextImage }
-            style={ [styles.card, isFirst && { transform: [...swipe.getTranslateTransform(), { rotate: rotate }] }] }
+            activeOpacity={1}
+            onPress={handleNextImage}
+            style={[styles.card, isFirst && { transform: [...swipe.getTranslateTransform(), { rotate: rotate }] }]}
         >
             <ImageBackground
-                source={{ uri: user.profileImages[currentImage].url }}
-                fadeDuration={ 500 }
-                style={ [styles.cardProfileMainImage, { justifyContent: 'center' }] }
+                source={{ uri: user?.profileImages[currentImage]?.url }}
+                fadeDuration={500}
+                style={[styles.cardProfileMainImage, { justifyContent: 'center' }]}
                 imageStyle={{ borderRadius: 8 }}
-                blurRadius={ lastUser ? 35 : 0 }
-            >   
+                blurRadius={lastUser ? 35 : 0}
+            >
                 {(user.profileImages.length > 1) && (
-                    <>{ !lastUser && (
-                        <View style={ styles.imagesIndicatorContainer}>
-                            <View style={ styles.imagesIndicator }>
+                    <>{!lastUser && (
+                        <View style={styles.imagesIndicatorContainer}>
+                            <View style={styles.imagesIndicator}>
                                 {user.profileImages.map(image => (
-                                    <View key={ image.id } style={ [styles.image, (image.id == user.profileImages[currentImage].id) && styles.imageSelected] }></View>
+                                    <View key={image.id} style={[styles.image, (image.id == user.profileImages[currentImage].id) && styles.imageSelected]}></View>
                                 ))}
                             </View>
                         </View>
                     )}</>
                 )}
 
-                { lastUser && (
-                    <View style={ styles.textContainer }>
-                        <Text style={ styles.text }>NO HAY MAS USUARIOS</Text>
-                        <Text style={ styles.paragraph }>
+                {lastUser && (
+                    <View style={styles.textContainer}>
+                        <Text style={styles.text}>NO HAY MAS USUARIOS</Text>
+                        <Text style={styles.paragraph}>
                             No hay mas usuarios registrados para mostrarte. Te recomendamos volver a revisar tus
                             <Text style={{ fontWeight: 800 }}> No Matcheados</Text> para ver si cámbias de opinión.
                         </Text>
                     </View>
-                ) }
+                )}
 
-                { !lastUser &&
+                {!lastUser &&
                     <LinearGradient
-                        colors={ ['transparent','#000'] }  
-                        style={ styles.cardControls }
+                        colors={['transparent', '#000']}
+                        style={styles.cardControls}
                     >
                         <View style={{ gap: 7 }}>
-                            <Text style={ styles.cardName }>{ user?.name } <Text style={ styles.cardAge }>{ getAgeFromDate(user?.birthdate) }</Text></Text>
-                            <View style={ styles.cardOnline }>
-                                { user?.isOnline
-                                    ? <View style={ styles.cardOnlineCircle }></View>
-                                    : <View style={ styles.cardOfflineCircle }></View>
+                            <Text style={styles.cardName}>{user?.name} <Text style={styles.cardAge}>{getAgeFromDate(user?.birthdate)}</Text></Text>
+                            <View style={styles.cardOnline}>
+                                {user?.isOnline
+                                    ? <View style={styles.cardOnlineCircle}></View>
+                                    : <View style={styles.cardOfflineCircle}></View>
                                 }
-                                <Text style={ styles.cardOnlineText }>
-                                    { user?.isOnline
+                                <Text style={styles.cardOnlineText}>
+                                    {user?.isOnline
                                         ? 'Está online'
                                         : 'No está online'
                                     }
                                 </Text>
                             </View>
-                            <Text style={ styles.cardBiography }>{ user?.about }</Text>
+                            <Text style={styles.cardBiography}>{user?.about}</Text>
                         </View>
-                                
-                        <Animated.View style={ styles.cardReactions }>
+
+                        <Animated.View style={styles.cardReactions}>
                             <TouchableOpacity
-                                style={ styles.noMatch }
-                                activeOpacity={ 0.7 }
-                                onPress={ handleNoMatch }
+                                style={styles.noMatch}
+                                activeOpacity={0.7}
+                                onPress={handleNoMatch}
                             >
                                 <Icon
                                     name="close"
-                                    size={ 35 }
+                                    size={35}
                                     color="#E2583A"
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity
-                                style={ styles.match }
-                                activeOpacity={ 0.7 }
-                                onPress={ handleMatch }
+                                style={styles.match}
+                                activeOpacity={0.7}
+                                onPress={handleMatch}
                             >
                                 <Icon
                                     name="favorite-outline"
-                                    size={ 35 }
+                                    size={35}
                                     color="#59CC91"
                                 />
                             </TouchableOpacity>
                         </Animated.View>
-                        
+
                     </LinearGradient>
                 }
             </ImageBackground>
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         padding: 5
-    },  
+    },
     match: {
         borderColor: '#59CC91',
         borderWidth: 2,
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 6
-    },  
+    },
     cardOnlineCircle: {
         width: 11,
         height: 11,

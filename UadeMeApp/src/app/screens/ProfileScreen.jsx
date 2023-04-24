@@ -6,6 +6,7 @@ import {
     TextInput,
     TouchableWithoutFeedback,
     Keyboard,
+    TouchableOpacity,
 } from 'react-native';
 import { ProfileImage } from '../components';
 import { career } from '../../data/career';
@@ -17,46 +18,46 @@ export const ProfileScreen = () => {
     const { user, age, about, images, setAbout } = useProfileScreen();
 
     return (
-        <TouchableWithoutFeedback onPress={ Keyboard.dismiss } accessible={ false }>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <View
-                style={ styles.container }
+                style={styles.container}
             >
-                <View style={ styles.profile }>
-                    <View style={ styles.profileInfoContainer }>
-                        <Text style={ styles.profileName }>{ user.name } { user.surname }{ age ?  (<Text style={ styles.age }>, { age }</Text>) : ''}</Text>
-                        <Text 
-                            style={ styles.profileCareer }
-                            numberOfLines={ 1 }
+                <View style={styles.profile}>
+                    <View style={styles.profileInfoContainer}>
+                        <Text style={styles.profileName}>{user.name} {user.surname}{age ? (<Text style={styles.age}>, {age}</Text>) : ''}</Text>
+                        <Text
+                            style={styles.profileCareer}
+                            numberOfLines={1}
                             ellipsizeMode='tail'
                         >
-                            { career[user.career]?.value }
+                            {career[user.career]?.value}
                         </Text>
                     </View>
-                    <Text style={ styles.aboutTitle }>Sobre mí</Text>
+                    <Text style={styles.aboutTitle}>Sobre mí</Text>
                     <TextInput
-                        multiline={ true }
-                        numberOfLines={ 4 }
-                        style={ styles.aboutInput }
-                        onChangeText={ (text) => setAbout(text) }
-                        value={ about }
+                        multiline={true}
+                        numberOfLines={4}
+                        style={styles.aboutInput}
+                        onChangeText={(text) => setAbout(text)}
+                        value={about}
                     />
                 </View>
 
-                <View style={ styles.boxes }>
-                    <View style={ styles.row }>
-                        <ProfileImage image={ images[0]?.url } />
-                        <ProfileImage image={ images[1]?.url } />
-                        <ProfileImage image={ images[2]?.url } />
+                <View style={styles.boxes}>
+                    <View style={styles.row}>
+                        <ProfileImage image={images[0]?.url} />
+                        <ProfileImage image={images[1]?.url} />
+                        <ProfileImage image={images[2]?.url} />
                     </View>
-                    <View style={ styles.row }>
-                        <ProfileImage image={ images[3]?.url } />
-                        <ProfileImage image={ images[4]?.url } />
-                        <ProfileImage image={ images[5]?.url } />
+                    <View style={styles.row}>
+                        <ProfileImage image={images[3]?.url} />
+                        <ProfileImage image={images[4]?.url} />
+                        <ProfileImage image={images[5]?.url} />
                     </View>
-                    <View style={ styles.row }>
-                        <ProfileImage image={ images[6]?.url } />
-                        <ProfileImage image={ images[7]?.url } />
-                        <ProfileImage image={ images[8]?.url } />
+                    <View style={styles.row}>
+                        <ProfileImage image={images[6]?.url} />
+                        <ProfileImage image={images[7]?.url} />
+                        <ProfileImage image={images[8]?.url} />
                     </View>
                 </View>
             </View>
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     profile: {
         paddingHorizontal: 15,
         gap: 10,
-    },  
+    },
     profileInfoContainer: {
         gap: 2
     },
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
         gap: 25,
         height: screenHeight * 0.61,
         padding: 15
-    },  
+    },
     row: {
         flexDirection: 'row',
         flex: 1,

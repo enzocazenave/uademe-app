@@ -8,20 +8,20 @@ export const Header = ({ screen, navigation }) => {
     const { name } = useRoute();
 
     if (screen == 'CoupleScreen') return (
-        <View style={ [stylesCouple.container, { paddingTop: top + 5}] }>
+        <View style={[stylesCouple.container, { paddingTop: top + 5 }]}>
             <Icon
-                style={ stylesCouple.settings }
+                style={stylesCouple.settings}
                 name="options-outline"
-                size={ 25 }
+                size={25}
             />
-            
-            <View style={ stylesCouple.titleContainer }> 
+
+            <View style={stylesCouple.titleContainer}>
                 <Icon
                     name="globe-outline"
-                    size={ 20 }
+                    size={20}
                     color="#1778AF"
                 />
-                <Text style={ stylesCouple.title }>
+                <Text style={stylesCouple.title}>
                     UadeMe
                 </Text>
             </View>
@@ -29,28 +29,28 @@ export const Header = ({ screen, navigation }) => {
     )
 
     if (screen == 'ProfileScreen' || screen == 'SettingsScreen') return (
-        <View style={ [stylesProfile.container, { paddingTop: top + 5}] }>
-            
-            <View style={ stylesProfile.titleContainer }> 
+        <View style={[stylesProfile.container, { paddingTop: top + 5 }]}>
+
+            <View style={stylesProfile.titleContainer}>
                 <Icon
                     name="globe-outline"
-                    size={ 20 }
+                    size={20}
                     color="#1778AF"
                 />
-                <Text style={ stylesProfile.title }>
+                <Text style={stylesProfile.title}>
                     UadeMe
                 </Text>
             </View>
-            
-            { (screen == 'ProfileScreen') &&
+
+            {(screen == 'ProfileScreen') &&
                 <TouchableOpacity
-                    style={ stylesProfile.settings }
-                    activeOpacity={ 0.7 }
-                    onPress={ () => navigation.navigate('ProfileStack', { screen: 'SettingsScreen' }) } 
+                    style={stylesProfile.settings}
+                    activeOpacity={0.7}
+                    onPress={() => navigation.navigate('ProfileStack', { screen: 'SettingsScreen' })}
                 >
                     <Icon
                         name="settings-outline"
-                        size={ 25 }
+                        size={25}
                     />
                 </TouchableOpacity>
             }
@@ -78,7 +78,7 @@ const stylesCouple = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-    },  
+    },
     title: {
         fontSize: 25,
         color: '#1778AF',
@@ -105,7 +105,7 @@ const stylesProfile = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-    },  
+    },
     title: {
         fontSize: 25,
         color: '#1778AF',

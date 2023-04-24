@@ -12,39 +12,39 @@ export const CoupleScreen = () => {
     const { handleNextUser, users, lastUser, match, noMatch } = useCoupleScreen();
 
     return (
-        <View style={ styles.container }>
+        <View style={styles.container}>
             {(user.career < 0)
                 ? <CoupleQuestions />
                 : (
-                    <View style={ (users.length == 0 && !lastUser.name) && { height: '90%', justifyContent: 'center' } }>
-                        { lastUser.name
+                    <View style={(users.length == 0 && !lastUser.name) && { height: '90%', justifyContent: 'center' }}>
+                        {lastUser.name
                             ? (
                                 <CoupleCard
-                                    user={ lastUser }
-                                    isFirst={ false }
-                                    handleNextUser={ () => {} }
+                                    user={lastUser}
+                                    isFirst={false}
+                                    handleNextUser={() => { }}
                                     lastUser
                                 />
-                            ) 
+                            )
                             : (
                                 users.map((user, index) => {
                                     const isFirst = index === 0
-        
+
                                     return (<CoupleCard
-                                        key={ user._id }
-                                        isFirst={ isFirst }
-                                        handleNextUser={ handleNextUser }
-                                        user={ user }
-                                        match={ match }
-                                        noMatch={ noMatch }
+                                        key={user._id}
+                                        isFirst={isFirst}
+                                        handleNextUser={handleNextUser}
+                                        user={user}
+                                        match={match}
+                                        noMatch={noMatch}
                                     />)
                                 }).reverse()
                             )
                         }
                         {(users.length == 0 && !lastUser.name) && (
-                            <View style={ styles.textContainer }>
-                                <Text style={ styles.text }>NO HAY MAS USUARIOS</Text>
-                                <Text style={ styles.paragraph }>
+                            <View style={styles.textContainer}>
+                                <Text style={styles.text}>NO HAY MAS USUARIOS</Text>
+                                <Text style={styles.paragraph}>
                                     No hay mas usuarios registrados para mostrarte. Te recomendamos volver a revisar tus
                                     <Text style={{ fontWeight: 800 }}> No Matcheados</Text> para ver si cámbias de opinión.
                                 </Text>
