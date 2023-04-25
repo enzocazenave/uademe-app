@@ -1,24 +1,37 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useProfileImage } from '../../hooks/useProfileImage';
+import { useState } from 'react';
 
-export const ProfileImage = ({ image }) => {
+export const ProfileImage = ({ imageToShow }) => {
 
-    const { uploadImage, uploadedImage, imageCondition, progress } = useProfileImage({ image });
+    const { uploadedImage, imageCondition, progress, image, isOpen, removeImage, setIsOpen, uploadImage } = useProfileImage({ imageToShow });
 
     return (
-        <View style={[styles.item, (imageCondition) && { borderColor: '#fff0' }]}>
+        <View style={[styles.item, (imageCondition) && { borderColor: '#fff0', gap: isOpen ? 8 : 0 }]}>
             {imageCondition
                 ? (
                     <TouchableOpacity
                         style={styles.remove}
                         activeOpacity={0.8}
+                        onPress={() => setIsOpen(!isOpen)}
                     >
-                        <Icon
-                            name="more-horiz"
-                            size={23}
-                            color="#fff"
-                        />
+                        {isOpen
+                            ? (
+                                <Icon
+                                    name="arrow-back"
+                                    size={23}
+                                    color="#fff"
+                                />
+                            )
+                            : (
+                                <Icon
+                                    name="more-horiz"
+                                    size={23}
+                                    color="#fff"
+                                />
+                            )
+                        }
                     </TouchableOpacity>
                 )
                 : (
@@ -54,19 +67,33 @@ export const ProfileImage = ({ image }) => {
                     <>
                         {image && (
                             <Image
-                                source={{ uri: image }}
+                                source={{ uri: image.url }}
                                 style={styles.image}
                             />
                         )}
                         {uploadedImage && (
                             <Image
-                                source={{ uri: uploadedImage }}
+                                source={{ uri: uploadedImage.url }}
                                 style={styles.image}
                             />
                         )}
                     </>
                 )
             }
+
+            {(isOpen) && (
+                <View style={styles.menu}>
+                    <TouchableOpacity style={styles.menuItem}>
+                        <Text style={[styles.menuItemText, { color: '#00f' }]}>Archivar</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.menuItem}
+                        onPress={removeImage}
+                    >
+                        <Text style={[styles.menuItemText, { color: '#f00' }]}>Eliminar</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
         </View>
     )
 }
@@ -77,7 +104,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         borderWidth: 2,
         borderStyle: 'dashed',
-        borderColor: '#bbb'
+        borderColor: '#bbb',
     },
     add: {
         backgroundColor: '#1778AF',
@@ -107,4 +134,17 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         borderRadius: 8,
     },
+    menu: {
+        width: '100%',
+        flexDirection: 'column-reverse',
+        backgroundColor: '#ddd',
+        borderRadius: 8
+    },
+    menuItem: {
+        padding: 7
+    },
+    menuItemText: {
+        fontSize: 17,
+        textAlign: 'center'
+    }
 })

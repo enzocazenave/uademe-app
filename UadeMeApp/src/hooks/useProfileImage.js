@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import backend from "../api/backend";
 import { launchImageLibrary } from "react-native-image-picker";
@@ -10,13 +10,18 @@ const imagePickerConfig = {
     },
 };
 
-export const useProfileImage = ({ image }) => {
-    
+export const useProfileImage = ({ imageToShow }) => {
     const [uploadedImage, setUploadedImage] = useState();
+    const [image, setImage] = useState(imageToShow);
     const [progress, setProgress] = useState(0);
     const { user } = useAuthContext();
+    const [isOpen, setIsOpen] = useState(false);
 
-    const uploadImageToCloudinary = async(image) => {
+    useEffect(() => {
+        setImage(imageToShow)
+    }, [imageToShow]);
+
+    const uploadImageToS3 = async (image) => {
         const { type, fileName, uri } = image;
         const formData = new FormData();
 
@@ -25,20 +30,20 @@ export const useProfileImage = ({ image }) => {
             type,
             uri
         });
-        
+
         const headers = { Accept: 'application/json', 'Content-Type': 'multipart/form-data' }
 
         setProgress(1);
 
         const { data } = await backend.post(
-            `/user/image/${ user._id }`, 
-            formData, 
-            { 
+            `/user/image/${user._id}`,
+            formData,
+            {
                 headers,
                 onUploadProgress: (progressEvent) => {
                     const { loaded, total } = progressEvent;
                     let percent = Math.floor((loaded * 100) / total);
-                    console.log(`UPLOADING: ${ loaded }kb of ${ total }kb`)
+
                     if (percent < 100) {
                         setProgress(percent);
                     }
@@ -48,11 +53,11 @@ export const useProfileImage = ({ image }) => {
 
         if (data.image) {
             setProgress(100);
-            
+
             setTimeout(() => {
-                setUploadedImage(image.uri);
+                setUploadedImage(data.image);
                 setProgress(0);
-            }, 250)
+            }, 250);
         }
     }
 
@@ -62,19 +67,32 @@ export const useProfileImage = ({ image }) => {
             const { width, height, fileSize } = response.assets[0];
             if (width == 0 || height == 0 || fileSize == 0) return;
 
-            uploadImageToCloudinary(response.assets[0]);
+            uploadImageToS3(response.assets[0]);
         });
     }
 
+    const removeImage = async () => {
+        const { data } = await backend.delete(`/user/image/${user._id}/${image?.id || uploadedImage?.id}`);
+        if (data.ok) {
+            setIsOpen(false);
+            setUploadedImage('');
+            setImage('');
+        }
+    }
+
     const imageCondition = image || uploadedImage;
-    
+
     return {
         //* PROPIEDADES
         uploadedImage,
         progress,
         imageCondition,
+        image,
+        isOpen,
 
         //* METODOS
-        uploadImage
+        uploadImage,
+        removeImage,
+        setIsOpen
     }
 }

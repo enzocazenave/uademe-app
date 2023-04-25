@@ -45,19 +45,19 @@ export const ProfileScreen = () => {
 
                 <View style={styles.boxes}>
                     <View style={styles.row}>
-                        <ProfileImage image={images[0]?.url} />
-                        <ProfileImage image={images[1]?.url} />
-                        <ProfileImage image={images[2]?.url} />
+                        <ProfileImage imageToShow={images[0]} />
+                        <ProfileImage imageToShow={images[1]} />
+                        <ProfileImage imageToShow={images[2]} />
                     </View>
                     <View style={styles.row}>
-                        <ProfileImage image={images[3]?.url} />
-                        <ProfileImage image={images[4]?.url} />
-                        <ProfileImage image={images[5]?.url} />
+                        <ProfileImage imageToShow={images[3]} />
+                        <ProfileImage imageToShow={images[4]} />
+                        <ProfileImage imageToShow={images[5]} />
                     </View>
                     <View style={styles.row}>
-                        <ProfileImage image={images[6]?.url} />
-                        <ProfileImage image={images[7]?.url} />
-                        <ProfileImage image={images[8]?.url} />
+                        <ProfileImage imageToShow={images[6]} />
+                        <ProfileImage imageToShow={images[7]} />
+                        <ProfileImage imageToShow={images[8]} />
                     </View>
                 </View>
             </View>
