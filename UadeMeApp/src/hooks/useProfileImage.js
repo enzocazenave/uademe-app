@@ -13,12 +13,14 @@ const imagePickerConfig = {
 export const useProfileImage = ({ imageToShow }) => {
     const [uploadedImage, setUploadedImage] = useState();
     const [image, setImage] = useState(imageToShow);
+    const [isStored, setIsStored] = useState(false);
     const [progress, setProgress] = useState(0);
     const { user } = useAuthContext();
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         setImage(imageToShow)
+        setIsStored(imageToShow?.stored);
     }, [imageToShow]);
 
     const uploadImageToS3 = async (image) => {
@@ -80,6 +82,14 @@ export const useProfileImage = ({ imageToShow }) => {
         }
     }
 
+    const storeImage = async () => {
+        const { data } = await backend.patch(`/user/image/${user._id}/${image?.id}`, { storedStatus: !isStored });
+        if (data.ok) {
+            setIsStored(data.stored);
+            setIsOpen(false);
+        }
+    }
+
     const imageCondition = image || uploadedImage;
 
     return {
@@ -89,10 +99,12 @@ export const useProfileImage = ({ imageToShow }) => {
         imageCondition,
         image,
         isOpen,
+        isStored,
 
         //* METODOS
         uploadImage,
         removeImage,
-        setIsOpen
+        setIsOpen,
+        storeImage
     }
 }

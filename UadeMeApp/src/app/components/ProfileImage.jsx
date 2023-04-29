@@ -5,7 +5,8 @@ import { useState } from 'react';
 
 export const ProfileImage = ({ imageToShow }) => {
 
-    const { uploadedImage, imageCondition, progress, image, isOpen, removeImage, setIsOpen, uploadImage } = useProfileImage({ imageToShow });
+    const { uploadedImage, imageCondition, progress, image, isOpen, removeImage, setIsOpen, uploadImage, storeImage, isStored } = useProfileImage({ imageToShow });
+    console.log(isStored);
 
     return (
         <View style={[styles.item, (imageCondition) && { borderColor: '#fff0', gap: isOpen ? 8 : 0 }]}>
@@ -69,13 +70,22 @@ export const ProfileImage = ({ imageToShow }) => {
                             <Image
                                 source={{ uri: image.url }}
                                 style={styles.image}
+                                blurRadius={isStored && !isOpen ? 20 : 0}
                             />
                         )}
                         {uploadedImage && (
                             <Image
                                 source={{ uri: uploadedImage.url }}
                                 style={styles.image}
+                                blurRadius={isStored && !isOpen ? 20 : 0}
                             />
+                        )}
+                        {isStored && !isOpen && (
+                            <View style={styles.stored}>
+                                <Text style={styles.storedText}>
+                                    Archivado
+                                </Text>
+                            </View>
                         )}
                     </>
                 )
@@ -83,8 +93,13 @@ export const ProfileImage = ({ imageToShow }) => {
 
             {(isOpen) && (
                 <View style={styles.menu}>
-                    <TouchableOpacity style={styles.menuItem}>
-                        <Text style={[styles.menuItemText, { color: '#00f' }]}>Archivar</Text>
+                    <TouchableOpacity
+                        style={styles.menuItem}
+                        onPress={storeImage}
+                    >
+                        <Text style={[styles.menuItemText, { color: '#00f' }]}>{
+                            isStored ? 'Desarchivar' : 'Archivar'
+                        }</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.menuItem}
@@ -104,7 +119,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         borderWidth: 2,
         borderStyle: 'dashed',
-        borderColor: '#bbb',
+        borderColor: '#bbb'
     },
     add: {
         backgroundColor: '#1778AF',
@@ -146,5 +161,19 @@ const styles = StyleSheet.create({
     menuItemText: {
         fontSize: 17,
         textAlign: 'center'
+    },
+    stored: {
+        position: 'absolute',
+        height: '100%',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        borderRadius: 8,
+    },
+    storedText: {
+        color: '#f0f0f0',
+        fontWeight: 600,
+        fontSize: 17,
     }
 })
