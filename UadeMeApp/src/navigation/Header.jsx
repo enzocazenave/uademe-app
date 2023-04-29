@@ -9,13 +9,12 @@ export const Header = ({ screen, navigation }) => {
 
     if (screen == 'CoupleScreen') return (
         <View style={[stylesCouple.container, { paddingTop: top + 5 }]}>
-            <Icon
-                style={stylesCouple.settings}
-                name="options-outline"
-                size={25}
-            />
-
             <View style={stylesCouple.titleContainer}>
+                <Icon
+                    style={stylesCouple.settings}
+                    name="options-outline"
+                    size={25}
+                />
                 <Icon
                     name="globe-outline"
                     size={20}
@@ -32,6 +31,18 @@ export const Header = ({ screen, navigation }) => {
         <View style={[stylesProfile.container, { paddingTop: top + 5 }]}>
 
             <View style={stylesProfile.titleContainer}>
+                {(screen == 'ProfileScreen') &&
+                    <TouchableOpacity
+                        style={stylesProfile.settings}
+                        activeOpacity={0.7}
+                        onPress={() => navigation.navigate('ProfileStack', { screen: 'SettingsScreen' })}
+                    >
+                        <Icon
+                            name="settings-outline"
+                            size={25}
+                        />
+                    </TouchableOpacity>
+                }
                 <Icon
                     name="globe-outline"
                     size={20}
@@ -41,19 +52,6 @@ export const Header = ({ screen, navigation }) => {
                     UadeMe
                 </Text>
             </View>
-
-            {(screen == 'ProfileScreen') &&
-                <TouchableOpacity
-                    style={stylesProfile.settings}
-                    activeOpacity={0.7}
-                    onPress={() => navigation.navigate('ProfileStack', { screen: 'SettingsScreen' })}
-                >
-                    <Icon
-                        name="settings-outline"
-                        size={25}
-                    />
-                </TouchableOpacity>
-            }
         </View>
     )
 
@@ -69,8 +67,7 @@ const stylesCouple = StyleSheet.create({
     },
     settings: {
         position: 'absolute',
-        right: 10,
-        top: 54,
+        right: 0
     },
     titleContainer: {
         flex: 1,
@@ -96,8 +93,7 @@ const stylesProfile = StyleSheet.create({
     },
     settings: {
         position: 'absolute',
-        right: 10,
-        top: 54,
+        right: 0
     },
     titleContainer: {
         flex: 1,

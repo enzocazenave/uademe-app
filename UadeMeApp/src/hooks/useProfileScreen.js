@@ -30,6 +30,14 @@ export const useProfileScreen = () => {
         setAbout(data.user.about);
     }
 
+    const changeAbout = async () => {
+        const { data } = await backend.patch(`/user/about/${user._id}`, { about });
+        setFullUser((currentFullUser) => ({
+            ...currentFullUser,
+            ['about']: data.about
+        }));
+    }
+
     return {
         //* PROPERTIES *//
         user,
@@ -39,6 +47,7 @@ export const useProfileScreen = () => {
         haveToSave,
 
         //* METHODS *//
-        setAbout
+        setAbout,
+        changeAbout
     }
 }

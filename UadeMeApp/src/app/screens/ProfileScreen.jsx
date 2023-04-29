@@ -15,7 +15,7 @@ import { useProfileScreen } from '../../hooks/useProfileScreen';
 const { height: screenHeight } = Dimensions.get('screen');
 
 export const ProfileScreen = () => {
-    const { user, age, about, images, setAbout, haveToSave } = useProfileScreen();
+    const { user, age, about, images, setAbout, haveToSave, changeAbout } = useProfileScreen();
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -29,6 +29,8 @@ export const ProfileScreen = () => {
                             <TouchableOpacity
                                 style={haveToSave ? styles.saveButtonActive : styles.saveButton}
                                 disabled={!haveToSave}
+                                onPress={changeAbout}
+                                activeOpacity={0.7}
                             >
                                 <Text style={haveToSave ? styles.saveButtonTextActive : styles.saveButtonText}>
                                     Guardar
