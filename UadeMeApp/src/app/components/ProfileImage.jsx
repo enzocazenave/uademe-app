@@ -1,12 +1,10 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useProfileImage } from '../../hooks/useProfileImage';
-import { useState } from 'react';
 
 export const ProfileImage = ({ imageToShow }) => {
 
     const { uploadedImage, imageCondition, progress, image, isOpen, removeImage, setIsOpen, uploadImage, storeImage, isStored } = useProfileImage({ imageToShow });
-    console.log(isStored);
 
     return (
         <View style={[styles.item, (imageCondition) && { borderColor: '#fff0', gap: isOpen ? 8 : 0 }]}>

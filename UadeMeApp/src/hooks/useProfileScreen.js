@@ -4,34 +4,40 @@ import { getAgeFromDate } from "../helpers/getAgeFromDate";
 import backend from "../api/backend";
 
 export const useProfileScreen = () => {
-    
+
     const { user } = useAuthContext();
     const [fullUser, setFullUser] = useState({});
     const [images, setImages] = useState(fullUser.profile_images || []);
-    const [about, setAbout] = useState('Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti omnis amet iusto voluptatibus. Numquam?');
-    
+    const [about, setAbout] = useState(fullUser.about || '');
+
     const age = useMemo(() => {
         if (user.birthdate) return getAgeFromDate(user.birthdate);
         return 0;
     }, [user.birthdate]);
 
+    const haveToSave = useMemo(() => {
+        return fullUser.about != about;
+    }, [fullUser.about, about]);
+
     useEffect(() => {
         getUser();
     }, [user._id]);
 
-    const getUser = async() => {
-        const { data } = await backend.get(`/user/${ user._id }`);
+    const getUser = async () => {
+        const { data } = await backend.get(`/user/${user._id}`);
         setFullUser(data.user);
         setImages(data.user.profile_images);
+        setAbout(data.user.about);
     }
-    
+
     return {
         //* PROPERTIES *//
         user,
         age,
         about,
         images,
-    
+        haveToSave,
+
         //* METHODS *//
         setAbout
     }

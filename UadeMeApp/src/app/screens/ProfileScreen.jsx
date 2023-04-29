@@ -15,7 +15,7 @@ import { useProfileScreen } from '../../hooks/useProfileScreen';
 const { height: screenHeight } = Dimensions.get('screen');
 
 export const ProfileScreen = () => {
-    const { user, age, about, images, setAbout } = useProfileScreen();
+    const { user, age, about, images, setAbout, haveToSave } = useProfileScreen();
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -24,7 +24,17 @@ export const ProfileScreen = () => {
             >
                 <View style={styles.profile}>
                     <View style={styles.profileInfoContainer}>
-                        <Text style={styles.profileName}>{user.name} {user.surname}{age ? (<Text style={styles.age}>, {age}</Text>) : ''}</Text>
+                        <View style={styles.firstLine}>
+                            <Text style={styles.profileName}>{user.name} {user.surname}{age ? (<Text style={styles.age}>, {age}</Text>) : ''}</Text>
+                            <TouchableOpacity
+                                style={haveToSave ? styles.saveButtonActive : styles.saveButton}
+                                disabled={!haveToSave}
+                            >
+                                <Text style={haveToSave ? styles.saveButtonTextActive : styles.saveButtonText}>
+                                    Guardar
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
                         <Text
                             style={styles.profileCareer}
                             numberOfLines={1}
@@ -73,6 +83,29 @@ const styles = StyleSheet.create({
     profile: {
         paddingHorizontal: 15,
         gap: 10,
+    },
+    firstLine: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    saveButton: {
+        borderColor: '#00f7',
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 3
+    },
+    saveButtonActive: {
+        borderColor: '#00f',
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 3
+    },
+    saveButtonText: {
+        color: '#00f7'
+    },
+    saveButtonTextActive: {
+        color: '#00f'
     },
     profileInfoContainer: {
         gap: 2

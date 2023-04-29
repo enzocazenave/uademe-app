@@ -5,7 +5,7 @@ import { getAgeFromDate } from '../../helpers/getAgeFromDate';
 import { useRef, useState } from "react";
 const { height: screenHeight, width: screenWidth } = Dimensions.get('screen');
 
-const OUT_OF_SCREEN = screenWidth + 0.5 * screenWidth
+const OUT_OF_SCREEN = screenWidth + 0.5 * screenWidth;
 
 export const CoupleCard = ({ handleNextUser, user, isFirst, lastUser = false, noMatch, match }) => {
 
