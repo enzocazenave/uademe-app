@@ -1,35 +1,52 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { CommunitiesScreen, CoupleScreen, SubjectsScreen, MapScreen, ProfileScreen } from '../app/screens';
+import { SettingsCoupleScreen, CommunitiesScreen, CoupleScreen, SubjectsScreen, MapScreen, ProfileScreen, SettingsScreen } from '../app/screens';
 import { LoginScreen, RegisterScreen, VerifyScreen, WelcomeScreen } from '../auth/screens';
 import { TabBar } from './TabBar';
 import { Header } from './Header';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { ActivityIndicator, Text, View } from 'react-native';
-import { SettingsScreen } from '../app/screens/SettingsScreen';
+import { ActivityIndicator, View } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const LoggedNavigation = () => {
+const ProfileNavigation = () => {
     return (
-        <Stack.Navigator 
-            screenOptions={{ 
-                headerShown: true, 
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: true,
                 gestureEnabled: false,
                 header: ({ navigation, route }) => (
-                    <Header screen={ route.name } navigation={ navigation } />
+                    <Header screen={route.name} navigation={navigation} />
                 ),
                 animation: 'none'
             }}
         >
-            <Stack.Screen name="ProfileScreen" component={ ProfileScreen } />
-            <Stack.Screen name="SettingsScreen" component={ SettingsScreen } />
+            <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+            <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
+            <Stack.Screen name="SettingsCoupleScreen" component={SettingsCoupleScreen} />
         </Stack.Navigator>
     )
 }
 
+const CoupleNavigation = () => {
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: true,
+                gestureEnabled: false,
+                header: ({ navigation, route }) => (
+                    <Header screen={route.name} navigation={navigation} />
+                ),
+                animation: 'none'
+            }}
+        >
+            <Stack.Screen name="CoupleScreen" component={CoupleScreen} />
+            <Stack.Screen name="SettingsCoupleScreen" component={SettingsCoupleScreen} />
+        </Stack.Navigator>
+    )
+}
 export const Navigation = () => {
 
     const { user, isChecking } = useContext(AuthContext);
@@ -45,45 +62,45 @@ export const Navigation = () => {
             ? (
                 <Tab.Navigator
                     screenOptions={{
-                        header:  ({ navigation, route, options }) => (
-                            <Header screen={ route.name } navigation={ navigation } />
+                        header: ({ navigation, route, options }) => (
+                            <Header screen={route.name} navigation={navigation} />
                         )
                     }}
-                    tabBar={ (props) => <TabBar { ...props } /> }
+                    tabBar={(props) => <TabBar {...props} />}
                 >
-                    <Tab.Screen 
-                        name="CoupleScreen" 
-                        component={ CoupleScreen }
+                    <Tab.Screen
+                        name="CoupleStack"
+                        component={CoupleNavigation}
                         options={{ tabBarLabel: 'Match' }}
                     />
-                    <Tab.Screen 
-                        name="CommunitiesScreen" 
-                        component={ CommunitiesScreen }
-                        options={{ tabBarLabel: 'Comunidades' }} 
+                    <Tab.Screen
+                        name="CommunitiesScreen"
+                        component={CommunitiesScreen}
+                        options={{ tabBarLabel: 'Comunidades' }}
                     />
-                    <Tab.Screen 
-                        name="SubjectsScreen" 
-                        component={ SubjectsScreen }
-                        options={{ tabBarLabel: 'Materias' }} 
+                    <Tab.Screen
+                        name="SubjectsScreen"
+                        component={SubjectsScreen}
+                        options={{ tabBarLabel: 'Materias' }}
                     />
-                    <Tab.Screen 
-                        name="MapScreen" 
-                        component={ MapScreen } 
+                    <Tab.Screen
+                        name="MapScreen"
+                        component={MapScreen}
                         options={{ tabBarLabel: 'Mapa' }}
                     />
-                    <Tab.Screen 
-                        name="ProfileStack" 
-                        component={ LoggedNavigation } 
+                    <Tab.Screen
+                        name="ProfileStack"
+                        component={ProfileNavigation}
                         options={{ tabBarLabel: 'Perfil' }}
                     />
                 </Tab.Navigator>
             )
             : (
-                <Stack.Navigator  screenOptions={{ animation: 'none', headerShown: false, gestureEnabled: false /*animation: 'fade_from_bottom'*/  }} >
-                    <Stack.Screen name="LoginScreen" component={ LoginScreen } />
-                    <Stack.Screen name="RegisterScreen" component={ RegisterScreen } />
-                    <Stack.Screen name="VerifyScreen" component={ VerifyScreen } />
-                    <Stack.Screen name="WelcomeScreen" component={ WelcomeScreen } />
+                <Stack.Navigator screenOptions={{ animation: 'none', headerShown: false, gestureEnabled: false /*animation: 'fade_from_bottom'*/ }} >
+                    <Stack.Screen name="LoginScreen" component={LoginScreen} />
+                    <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+                    <Stack.Screen name="VerifyScreen" component={VerifyScreen} />
+                    <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
                 </Stack.Navigator>
             )
         }

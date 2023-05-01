@@ -1,11 +1,9 @@
-import Icon from 'react-native-vector-icons/Ionicons';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, View } from 'react-native';
 import { TabButton } from './TabButton';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const icons = {
-    CoupleScreen: {
+    CoupleStack: {
         focused: 'heart',
         notFocused: 'heart-outline',
         color: '#E50E0E'

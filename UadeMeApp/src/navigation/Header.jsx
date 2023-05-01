@@ -10,11 +10,16 @@ export const Header = ({ screen, navigation }) => {
     if (screen == 'CoupleScreen') return (
         <View style={[stylesCouple.container, { paddingTop: top + 5 }]}>
             <View style={stylesCouple.titleContainer}>
-                <Icon
+                <TouchableOpacity
                     style={stylesCouple.settings}
-                    name="options-outline"
-                    size={25}
-                />
+                    activeOpacity={0.7}
+                    onPress={() => navigation.navigate('CoupleStack', { screen: 'SettingsCoupleScreen' })}
+                >
+                    <Icon
+                        name="options-outline"
+                        size={25}
+                    />
+                </TouchableOpacity>
                 <Icon
                     name="globe-outline"
                     size={20}
@@ -27,7 +32,7 @@ export const Header = ({ screen, navigation }) => {
         </View>
     )
 
-    if (screen == 'ProfileScreen' || screen == 'SettingsScreen') return (
+    if (screen == 'ProfileScreen' || screen == 'SettingsScreen' || screen == 'SettingsCoupleScreen') return (
         <View style={[stylesProfile.container, { paddingTop: top + 5 }]}>
 
             <View style={stylesProfile.titleContainer}>
@@ -43,6 +48,32 @@ export const Header = ({ screen, navigation }) => {
                         />
                     </TouchableOpacity>
                 }
+                {(screen == 'SettingsCoupleScreen') && (
+                    <TouchableOpacity
+                        style={{ position: 'absolute', left: 0 }}
+                        activeOpacity={0.7}
+                        onPress={() => {
+                            navigation.navigate('CoupleScreen')
+                        }}
+                    >
+                        <Icon
+                            name="arrow-back-outline"
+                            size={25}
+                        />
+                    </TouchableOpacity>
+                )}
+                {(screen == 'SettingsScreen') && (
+                    <TouchableOpacity
+                        style={{ position: 'absolute', left: 0 }}
+                        activeOpacity={0.7}
+                        onPress={() => navigation.navigate('ProfileScreen')}
+                    >
+                        <Icon
+                            name="arrow-back-outline"
+                            size={25}
+                        />
+                    </TouchableOpacity>
+                )}
                 <Icon
                     name="globe-outline"
                     size={20}
