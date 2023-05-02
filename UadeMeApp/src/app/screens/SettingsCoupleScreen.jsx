@@ -9,8 +9,8 @@ export const SettingsCoupleScreen = () => {
     const [gender, setGender] = useState(-1);
     const { user } = useAuthContext();
     const stateRef = useRef();
-    const initialStateRef = useRef();
     stateRef.current = { gender, genderYouSearch };
+    const initialStateRef = useRef();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,7 +27,7 @@ export const SettingsCoupleScreen = () => {
         return async () => {
             const { gender, genderYouSearch } = stateRef.current;
             const { gender: initialGender, genderYouSearch: initialGenderYouSearch } = initialStateRef.current;
-            console.log(gender, initialGender, genderYouSearch, initialGenderYouSearch)
+
             if (gender != initialGender || genderYouSearch != initialGenderYouSearch)
                 await backend.patch(`/couple/settings/${user?._id}`, {
                     gender: stateRef.current.gender,

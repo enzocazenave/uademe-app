@@ -7,7 +7,6 @@ export const useCoupleScreen = () => {
     const [users, setUsers] = useState([]);
     const [limit, setLimit] = useState(10);
     const [lastUser, setLastUser] = useState({});
-    const gender = 0;
 
     useEffect(() => {
         getUsers();
