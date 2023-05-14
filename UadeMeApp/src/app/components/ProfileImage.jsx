@@ -80,6 +80,11 @@ export const ProfileImage = ({ imageToShow }) => {
                         )}
                         {isStored && !isOpen && (
                             <View style={styles.stored}>
+                                <Icon
+                                    name="inventory"
+                                    size={22}
+                                    color="#cbcbcb"
+                                />
                                 <Text style={styles.storedText}>
                                     Archivado
                                 </Text>
@@ -168,9 +173,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: 'rgba(0,0,0,0.5)',
         borderRadius: 8,
+        gap: 10
     },
     storedText: {
-        color: '#f0f0f0',
+        color: '#cbcbcb',
         fontWeight: 600,
         fontSize: 17,
     }

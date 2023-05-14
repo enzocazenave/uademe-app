@@ -32,7 +32,7 @@ export const Header = ({ screen, navigation }) => {
         </View>
     )
 
-    if (screen == 'ProfileScreen' || screen == 'SettingsScreen' || screen == 'SettingsCoupleScreen') return (
+    if (screen == 'ProfileScreen' || screen == 'SettingsScreen' || screen == 'SettingsCoupleScreen' || screen == 'InteractionUsersListScreen') return (
         <View style={[stylesProfile.container, { paddingTop: top + 5 }]}>
 
             <View style={stylesProfile.titleContainer}>
@@ -48,13 +48,11 @@ export const Header = ({ screen, navigation }) => {
                         />
                     </TouchableOpacity>
                 }
-                {(screen == 'SettingsCoupleScreen') && (
+                {(screen == 'SettingsCoupleScreen' || screen == 'InteractionUsersListScreen') && (
                     <TouchableOpacity
                         style={{ position: 'absolute', left: 0 }}
                         activeOpacity={0.7}
-                        onPress={() => {
-                            navigation.navigate('CoupleScreen')
-                        }}
+                        onPress={() => { navigation.navigate('CoupleScreen', { refresh: screen == 'SettingsCoupleScreen' }) }}
                     >
                         <Icon
                             name="arrow-back-outline"

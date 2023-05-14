@@ -98,6 +98,7 @@ export const CoupleCard = ({ handleNextUser, user, isFirst, lastUser = false, no
                                     }
                                 </Text>
                             </View>
+
                             <Text style={styles.cardBiography}>{user?.about}</Text>
                         </View>
 
@@ -113,6 +114,11 @@ export const CoupleCard = ({ handleNextUser, user, isFirst, lastUser = false, no
                                     color="#E2583A"
                                 />
                             </TouchableOpacity>
+                            <Text style={styles.cardSex}>
+                                {user.genderYouSearch == 0 && 'Busca conocer hombres'}
+                                {user.genderYouSearch == 1 && 'Busca conocer mujeres'}
+                                {user.genderYouSearch == 2 && 'Bisexual'}
+                            </Text>
                             <TouchableOpacity
                                 style={styles.match}
                                 activeOpacity={0.7}
@@ -144,7 +150,15 @@ const styles = StyleSheet.create({
         height: '100%',
         flexDirection: 'column',
         borderRadius: 8,
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 7,
+        },
+        shadowOpacity: 0.41,
+        shadowRadius: 9.11,
+        elevation: 14,
     },
     cardControls: {
         flex: 1,
@@ -158,6 +172,7 @@ const styles = StyleSheet.create({
     cardReactions: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center'
     },
     noMatch: {
         borderColor: '#E2583A',
@@ -187,6 +202,11 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: 500,
         fontSize: 14
+    },
+    cardSex: {
+        color: '#eee',
+        fontWeight: 500,
+        fontSize: 13
     },
     cardOnline: {
         flexDirection: 'row',

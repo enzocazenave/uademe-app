@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         height: 70,
         paddingHorizontal: 15,
-        borderRadius: 8
+        borderRadius: 8,
     },
     boxes: {
         flexDirection: "column",

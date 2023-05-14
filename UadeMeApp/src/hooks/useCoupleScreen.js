@@ -9,10 +9,12 @@ export const useCoupleScreen = () => {
     const [lastUser, setLastUser] = useState({});
 
     useEffect(() => {
-        getUsers();
+        getUsers({});
     }, [limit]);
 
-    const getUsers = async () => {
+    const getUsers = async ({ changeInConfig = false }) => {
+        if (changeInConfig) setUsers([]);
+
         const { data } = await backend.get(`/couple/users/${user._id}?limit=${limit}`);
         if (data.users.length == 0) return;
         setUsers((previousUsers) => [...previousUsers, ...data.users]);
@@ -43,6 +45,7 @@ export const useCoupleScreen = () => {
         handleNextUser,
         match,
         noMatch,
-        lastUser
+        lastUser,
+        getUsers
     }
 }

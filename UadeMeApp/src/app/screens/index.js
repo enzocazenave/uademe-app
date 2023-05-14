@@ -5,3 +5,4 @@ export * from './MapScreen';
 export * from './ProfileScreen';
 export * from './SettingsScreen';
 export * from './SettingsCoupleScreen';
+export * from './InteractionUsersListScreen';

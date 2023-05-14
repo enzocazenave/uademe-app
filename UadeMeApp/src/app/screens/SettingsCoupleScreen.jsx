@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import backend from "../../api/backend";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { useNavigation } from "@react-navigation/native";
 
 export const SettingsCoupleScreen = () => {
 
@@ -11,6 +12,7 @@ export const SettingsCoupleScreen = () => {
     const stateRef = useRef();
     stateRef.current = { gender, genderYouSearch };
     const initialStateRef = useRef();
+    const navigation = useNavigation();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -36,14 +38,12 @@ export const SettingsCoupleScreen = () => {
         }
     }, []);
 
-    const handleChangeGenderYouSearch = (gender) => {
-        setGenderYouSearch(gender);
-        console.log('Ahora genderYouSearch vale: ', gender)
+    const handleChangeGenderYouSearch = (genderYouSearch) => {
+        setGenderYouSearch(genderYouSearch);
     }
 
     const handleChangeGender = (gender) => {
         setGender(gender);
-        console.log('Ahora gender vale: ', gender)
     }
 
     return (
@@ -98,6 +98,26 @@ export const SettingsCoupleScreen = () => {
                         activeOpacity={0.6}
                     >
                         <Text style={[styles.sectionButtonText, gender == 2 && styles.sectionButtonTextSelected]}>Otros</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+
+            <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Matcheos y no matcheos</Text>
+                <View style={styles.sectionButtons}>
+                    <TouchableOpacity
+                        style={styles.sectionButton}
+                        onPress={() => { navigation.navigate('InteractionUsersListScreen', { match: true }) }}
+                        activeOpacity={0.6}
+                    >
+                        <Text style={styles.sectionButtonText}>Matcheos</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={[styles.sectionButton]}
+                        onPress={() => { navigation.navigate('InteractionUsersListScreen', { match: false }) }}
+                        activeOpacity={0.6}
+                    >
+                        <Text style={styles.sectionButtonText}>No Matcheos</Text>
                     </TouchableOpacity>
                 </View>
             </View>

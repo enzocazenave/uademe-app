@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { SettingsCoupleScreen, CommunitiesScreen, CoupleScreen, SubjectsScreen, MapScreen, ProfileScreen, SettingsScreen } from '../app/screens';
+import { SettingsCoupleScreen, CommunitiesScreen, CoupleScreen, SubjectsScreen, MapScreen, ProfileScreen, SettingsScreen, InteractionUsersListScreen } from '../app/screens';
 import { LoginScreen, RegisterScreen, VerifyScreen, WelcomeScreen } from '../auth/screens';
 import { TabBar } from './TabBar';
 import { Header } from './Header';
@@ -25,7 +25,6 @@ const ProfileNavigation = () => {
         >
             <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
             <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
-            <Stack.Screen name="SettingsCoupleScreen" component={SettingsCoupleScreen} />
         </Stack.Navigator>
     )
 }
@@ -44,6 +43,7 @@ const CoupleNavigation = () => {
         >
             <Stack.Screen name="CoupleScreen" component={CoupleScreen} />
             <Stack.Screen name="SettingsCoupleScreen" component={SettingsCoupleScreen} />
+            <Stack.Screen name="InteractionUsersListScreen" component={InteractionUsersListScreen} />
         </Stack.Navigator>
     )
 }

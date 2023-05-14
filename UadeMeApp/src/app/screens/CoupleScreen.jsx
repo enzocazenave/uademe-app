@@ -6,10 +6,21 @@ import {
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { CoupleCard, CoupleQuestions } from '../components';
 import { useCoupleScreen } from '../../hooks/useCoupleScreen';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useEffect } from 'react';
 
 export const CoupleScreen = () => {
     const { user } = useAuthContext();
-    const { handleNextUser, users, lastUser, match, noMatch } = useCoupleScreen();
+    const { handleNextUser, users, lastUser, match, noMatch, getUsers } = useCoupleScreen();
+    const { params } = useRoute();
+
+    useEffect(() => {
+        if (params?.refresh) {
+            setTimeout(() => {
+                getUsers({ changeInConfig: true })
+            }, 1000);
+        }
+    }, [params]);
 
     return (
         <View style={styles.container}>
